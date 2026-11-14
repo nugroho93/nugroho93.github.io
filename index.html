@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wahyu Nugroho — Planter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+/* Layout: masthead gelap dengan peta blok Kelampai yang bisa disentuh (satu-satunya bagian "berani"), lalu bagian terang yang tenang: profil, pengalaman, kemampuan berfilter, galeri aplikasi bertab, kontak. */
+:root{
+  --navy:#0B3C83;
+  --night:#071B3D;
+  --cyan:#19B5EA;
+  --palm:#EE8A3A;
+  --paper:#F2F5F9;
+  --ink:#16202E;
+  --muted:#4A586B;
+  --line:#D3DCE8;
+  --card:#FFFFFF;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"Barlow","Segoe UI",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+img{max-width:100%}
+a{color:var(--navy)}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05;font-weight:700}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+button{font:inherit;cursor:pointer}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:rgba(7,27,61,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:.6px}
+.brand i{width:30px;height:30px;border-radius:8px;background:var(--cyan);color:var(--night);display:grid;place-items:center;font-style:normal;font-size:16px}
+.menu{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.menu a{display:block;color:#C7D6EC;text-decoration:none;font-weight:500;font-size:15px;padding:8px 12px;border-radius:999px}
+.menu a:hover{color:#fff}
+.menu a.on{background:rgba(25,181,234,.16);color:#fff}
+.menu-btn{display:none;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;width:44px;height:44px;align-items:center;justify-content:center}
+
+/* ---------- hero ---------- */
+.hero{background:radial-gradient(1200px 500px at 85% 20%,#0E3A7E 0%,var(--night) 60%);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:center;padding-top:56px;padding-bottom:64px}
+.who{display:flex;align-items:center;gap:18px}
+.hex{position:relative;width:118px;height:134px;flex:none;filter:drop-shadow(0 0 12px rgba(25,181,234,.55))}
+.hex .rim{position:absolute;inset:0;background:#fff;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.hex .fill{position:absolute;left:4px;top:4px;width:110px;height:126px;background:var(--cyan);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.hex img{position:absolute;left:4px;top:-10px;width:110px;height:140px;object-fit:cover;object-position:center top;clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:14px;letter-spacing:1.8px;text-transform:uppercase}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--palm)}
+.hero h1{font-size:clamp(52px,7vw,84px);letter-spacing:.5px;margin-top:22px;text-transform:uppercase}
+.hero h1 span{color:var(--cyan)}
+.role{font-size:20px;color:#CFDDF1;margin:10px 0 0}
+.lede{font-size:18px;color:#E7EEF8;max-width:54ch;margin:18px 0 0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:2px solid transparent;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn svg{width:18px;height:18px}
+.btn-cyan{background:var(--cyan);color:var(--night)}
+.btn-cyan:hover{background:#4CC8F2}
+.btn-line{border-color:rgba(255,255,255,.35);color:#fff}
+.btn-line:hover{border-color:#fff}
+
+.mapcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:18px 18px 14px;position:relative}
+.maphead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.maphead b{font-family:var(--display);font-size:22px;letter-spacing:.4px}
+.maphead small{color:#9FB6D6;font-size:14px}
+.estate{display:block;width:100%;height:auto;margin-top:8px;touch-action:manipulation}
+.estate path{stroke:#071B3D;stroke-width:1;stroke-linejoin:round;transition:opacity .2s,fill .2s;cursor:pointer}
+.estate path.I{fill:#19B5EA}
+.estate path.J{fill:#EE8A3A}
+.estate path.PCSB{fill:#7FA6DA}
+.estate path.dim{opacity:.16}
+.estate path:hover,.estate path.hit{fill:#fff}
+.pulse circle.dot{fill:#fff}
+.pulse circle.ring{fill:none;stroke:#fff;stroke-width:2;animation:ring 2.4s ease-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes ring{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(2.6)}}
+.afd{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.afd button{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);color:#E7EEF8;border-radius:999px;padding:6px 14px;min-height:36px;font-size:14px;font-weight:500}
+.afd button[aria-pressed="true"]{background:#fff;color:var(--night);border-color:#fff}
+.afd i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.tip{position:absolute;pointer-events:none;background:#fff;color:var(--ink);border-radius:10px;padding:8px 12px;font-size:14px;line-height:1.35;box-shadow:0 10px 24px rgba(0,0,0,.35);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;white-space:nowrap}
+.tip.show{opacity:1;transform:none}
+.tip b{font-family:var(--display);font-size:18px;display:block}
+.maphint{color:#9FB6D6;font-size:13px;margin:8px 0 0}
+
+/* ---------- facts ---------- */
+.facts{background:var(--card);border-bottom:1px solid var(--line)}
+.facts .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.fact{padding:22px 20px;border-left:1px solid var(--line)}
+.fact:first-child{border-left:0}
+.fact b{display:block;font-family:var(--display);font-size:38px;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.fact span{color:var(--muted);font-size:15px}
+
+/* ---------- sections ---------- */
+section{padding:76px 0}
+.sec-head{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;align-items:end;margin-bottom:30px}
+.sec-head .num{grid-row:span 2;font-family:var(--display);font-size:64px;line-height:.8;color:var(--cyan);font-weight:700}
+.sec-head h2{font-size:42px;color:var(--navy)}
+.sec-head p{margin:0;color:var(--muted);max-width:62ch}
+
+.profile{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:start}
+.profile p{margin:0 0 14px;font-size:18px;max-width:64ch}
+.quote{background:var(--navy);color:#fff;border-radius:16px;padding:28px;position:relative}
+.quote p{font-family:var(--display);font-size:28px;line-height:1.2;margin:0;font-weight:600}
+.quote small{display:block;margin-top:14px;color:#BFD3EE;font-size:15px}
+
+/* career bar + timeline */
+.career{display:grid;grid-template-columns:repeat(13,1fr);gap:3px;margin-bottom:8px}
+.career button{height:40px;border:0;border-radius:6px;color:#fff;font-weight:600;font-size:13px;padding:0 6px;text-align:left;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:filter .15s,transform .15s}
+.career button:hover,.career button.on{filter:brightness(1.12);transform:translateY(-2px)}
+.c1{background:#5E7FB0}.c2{background:#2F67B4}.c3{background:var(--navy)}.c4{background:var(--cyan);color:var(--night)!important}
+.years{display:grid;grid-template-columns:repeat(13,1fr);font-size:12px;color:var(--muted);margin-bottom:28px;font-variant-numeric:tabular-nums}
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.timeline li{display:grid;grid-template-columns:150px 1fr;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;transition:border-color .2s,box-shadow .2s}
+.timeline li.on{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(25,181,234,.18)}
+.when{font-family:var(--display);font-size:22px;color:var(--navy);font-weight:600;font-variant-numeric:tabular-nums}
+.when small{display:block;font-family:var(--body);font-size:13px;color:var(--muted);font-weight:500}
+.timeline h3{font-size:25px;color:var(--ink)}
+.timeline p{margin:4px 0 0;color:var(--muted)}
+.badge{display:inline-block;background:var(--cyan);color:var(--night);font-family:var(--body);font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;vertical-align:middle;margin-left:8px}
+
+/* skills */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.filters button{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;min-height:42px;font-weight:600;font-size:15px;color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;transition:transform .2s,box-shadow .2s,opacity .2s}
+.skill:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(11,60,131,.1)}
+.skill[hidden]{display:none}
+.skill .ico{width:42px;height:42px;border-radius:11px;background:#E2F4FC;display:grid;place-items:center;margin-bottom:12px}
+.skill .ico svg{width:22px;height:22px;stroke:var(--navy)}
+.skill h3{font-size:24px;color:var(--navy)}
+.skill p{margin:6px 0 0;font-size:16px;color:var(--ink)}
+.skill .tag{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.traits{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.traits span{border:1px dashed #9DB3D2;border-radius:999px;padding:6px 14px;font-size:15px;color:var(--navy);font-weight:500}
+
+/* portfolio */
+.port{background:var(--night);color:#fff}
+.port .sec-head h2{color:#fff}
+.port .sec-head p{color:#B9CBE5}
+.showcase{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
+.tabs{display:grid;gap:8px}
+.tab{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 14px;color:#DDE7F5;min-height:64px;transition:background .15s,border-color .15s}
+.tab:hover{background:rgba(255,255,255,.08)}
+.tab[aria-selected="true"]{background:#fff;color:var(--night);border-color:#fff}
+.tab .ti{width:44px;height:44px;border-radius:11px;background:rgba(25,181,234,.15);display:grid;place-items:center}
+.tab[aria-selected="true"] .ti{background:var(--night)}
+.tab .ti svg{width:22px;height:22px;stroke:var(--cyan)}
+.tab b{display:block;font-family:var(--display);font-size:20px;line-height:1.1}
+.tab small{font-size:13px;opacity:.75}
+.panel{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:26px;min-height:520px}
+.panel[hidden]{display:none}
+.panel.wide{grid-template-columns:1fr}
+.device{position:relative;cursor:zoom-in;border:0;padding:0;background:none;display:block}
+.device.phone{width:230px;border:8px solid #020C1F;border-radius:30px;overflow:hidden;background:#020C1F;box-shadow:0 24px 48px rgba(0,0,0,.45)}
+.device.phone img{display:block;width:100%;height:auto;aspect-ratio:390/760;object-fit:cover;object-position:top}
+.device.laptop{width:100%;border:8px solid #020C1F;border-bottom-width:14px;border-radius:14px 14px 6px 6px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,.45)}
+.device.laptop img{display:block;width:100%;height:auto}
+.zoom{position:absolute;right:10px;bottom:10px;background:rgba(7,27,61,.85);color:#fff;border-radius:999px;font-size:13px;font-weight:600;padding:4px 10px}
+.info .prod{font-size:13px;font-weight:700;letter-spacing:1.6px;color:var(--cyan);text-transform:uppercase}
+.info h3{font-size:40px;margin-top:6px}
+.info p{color:#DCE7F6;margin:10px 0 0;max-width:56ch}
+.info ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.info li{display:grid;grid-template-columns:22px 1fr;gap:8px;color:#E7EEF8;font-size:16px}
+.info li svg{width:18px;height:18px;stroke:var(--cyan);margin-top:4px}
+.status{display:inline-block;font-size:13px;font-weight:700;padding:3px 12px;border-radius:999px;margin-left:10px;vertical-align:middle;letter-spacing:0;text-transform:none}
+.s-live{background:#22B87C;color:#04261A}
+.s-dev{background:var(--cyan);color:var(--night)}
+.wide .info{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;align-items:start}
+.wide .info ul{margin-top:0}
+.extras{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.extra{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 22px}
+.extra .prod{font-size:12px;font-weight:700;letter-spacing:1.4px;color:var(--cyan);text-transform:uppercase}
+.extra h3{font-size:24px;margin-top:6px}
+.extra p{margin:6px 0 0;color:#DCE7F6;font-size:16px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;color:#B9CBE5;font-size:14px}
+.legend span{display:inline-flex;gap:8px;align-items:center}
+.legend i{width:10px;height:10px;border-radius:50%}
+
+/* lightbox */
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(1200px,94vw);max-height:92vh}
+dialog.lb::backdrop{background:rgba(2,10,25,.85)}
+dialog.lb img{display:block;max-width:100%;max-height:86vh;border-radius:12px;margin:0 auto}
+dialog.lb .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#fff;margin-bottom:10px}
+dialog.lb button{background:#fff;border:0;border-radius:999px;min-height:40px;padding:0 16px;font-weight:700;color:var(--night)}
+
+/* contact */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:start}
+.edu{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.edu li{display:grid;grid-template-columns:110px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.edu .yr{font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.edu b{color:var(--navy)}
+.contact{background:var(--navy);color:#fff;border-radius:18px;padding:30px}
+.contact h3{font-size:36px}
+.contact > p{color:#C9D9F0;margin:8px 0 20px}
+.crow{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid rgba(255,255,255,.14)}
+.crow .ci{width:44px;height:44px;border-radius:12px;background:rgba(25,181,234,.18);display:grid;place-items:center}
+.crow .ci svg{width:22px;height:22px;stroke:var(--cyan)}
+.crow small{display:block;color:#A9C0E0;font-size:13px}
+.crow a,.crow span.v{color:#fff;font-weight:600;font-size:18px;text-decoration:none}
+.crow a:hover{text-decoration:underline}
+.copy{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;min-height:38px;padding:0 14px;font-size:14px;font-weight:600}
+.copy.ok{background:#22B87C;border-color:#22B87C;color:#04261A}
+footer{background:var(--night);color:#9FB6D6;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:22px;padding-bottom:22px}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero .wrap,.profile,.contact-wrap{grid-template-columns:1fr}
+  .showcase{grid-template-columns:1fr}
+  .tabs{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  .wide .info{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .menu-btn{display:inline-flex}
+  .menu{position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--night);padding:8px 16px 16px;display:none;border-bottom:1px solid rgba(255,255,255,.1)}
+  .menu.open{display:flex}
+  .menu a{padding:12px}
+  .facts .wrap{grid-template-columns:repeat(2,1fr)}
+  .fact:nth-child(3){border-left:0}
+  .fact:nth-child(n+3){border-top:1px solid var(--line)}
+  .panel{grid-template-columns:1fr;justify-items:center;min-height:0}
+  .panel .info{justify-self:stretch}
+  .extras{grid-template-columns:1fr}
+  .timeline li{grid-template-columns:1fr;gap:6px}
+  .career button{font-size:0}
+  .years span:nth-child(odd){visibility:hidden}
+  section{padding:56px 0}
+  .sec-head .num{font-size:48px}
+  .sec-head h2{font-size:34px}
+  .info h3{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Navigasi utama">
+  <div class="wrap">
+    <a class="brand" href="#top"><i>W</i>WAHYU NUGROHO</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="Buka menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+    </button>
+    <ul class="menu" id="menu">
+      <li><a href="#profil">Profil</a></li>
+      <li><a href="#pengalaman">Pengalaman</a></li>
+      <li><a href="#kemampuan">Kemampuan</a></li>
+      <li><a href="#portofolio">Portofolio</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="who">
+        <div class="hex">
+          <div class="rim"></div><div class="fill"></div>
+          <img src="photo.png" alt="Foto Wahyu Nugroho memakai helm dan rompi kerja">
+        </div>
+        <div>
+          <div class="eyebrow">Planter kelapa sawit</div>
+          <p class="role" style="margin-top:6px">Staff Asisten Agronomi<br>PT. Nova Plantation · Kelampai Estate</p>
+        </div>
+      </div>
+      <h1>Wahyu <span>Nugroho</span></h1>
+      <p class="lede">Sejak 2014 saya bekerja di administrasi estate, agronomi, dan quality control. Saya juga membangun aplikasi kebun sendiri, dari input BKM sampai peta blok offline, supaya data lapangan lebih cepat sampai ke meja kantor.</p>
+      <div class="cta">
+        <a class="btn btn-cyan" href="https://wa.me/6282252693421">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.5A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+          Chat WhatsApp
+        </a>
+        <a class="btn btn-line" href="#portofolio">Lihat aplikasi saya</a>
+      </div>
+    </div>
+
+    <figure class="mapcard" style="margin:0">
+      <div class="maphead">
+        <b>Kelampai Estate</b>
+        <small id="mapCount">133 blok · 3 afdeling</small>
+      </div>
+      <svg class="estate" id="estate" viewBox="0 0 1000 532" role="img" aria-label="Peta blok tanam Kelampai Estate, dibagi per afdeling I, J, dan PCSB"></svg>
+      <div class="afd" role="group" aria-label="Sorot afdeling">
+        <button type="button" data-afd="all" aria-pressed="true">Semua</button>
+        <button type="button" data-afd="I" aria-pressed="false"><i style="background:#19B5EA"></i>Afdeling I</button>
+        <button type="button" data-afd="J" aria-pressed="false"><i style="background:#EE8A3A"></i>Afdeling J</button>
+        <button type="button" data-afd="PCSB" aria-pressed="false"><i style="background:#7FA6DA"></i>PCSB</button>
+      </div>
+      <figcaption class="maphint">Arahkan atau ketuk blok untuk melihat nama dan luasnya. Peta ini berasal dari aplikasi Peta Kebun buatan saya.</figcaption>
+      <div class="tip" id="tip" role="status" aria-live="polite"></div>
+    </figure>
+  </div>
+</header>
+
+<div class="facts" aria-label="Ringkasan">
+  <div class="wrap">
+    <div class="fact"><b>2014</b><span>mulai berkarier di perkebunan sawit</span></div>
+    <div class="fact"><b>3</b><span>perusahaan perkebunan</span></div>
+    <div class="fact"><b>5</b><span>aplikasi kebun yang saya bangun</span></div>
+    <div class="fact"><b>SAP · PMS · JVE</b><span>sistem perkebunan yang dikuasai</span></div>
+  </div>
+</div>
+
+<main>
+<section id="profil">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>Profil</h2><p>Dari meja administrasi ke lapangan, lalu ke aplikasi.</p></div>
+    <div class="profile">
+      <div>
+        <p>Saya memulai karier dari administrasi: payroll, administrasi estate, lalu Kasub Agronomi. Dari situ saya terbiasa membaca kebun lewat angka, mulai dari budget, realisasi, rotasi, sampai dosis pupuk per blok.</p>
+        <p>Di PT. Nova Plantation saya tiga tahun di Quality Control sebelum pindah ke agronomi. Pengalaman QC membuat saya terbiasa menyusun standar kerja, memeriksa langsung di lapangan, dan menindaklanjuti temuan sampai selesai.</p>
+        <p>Sekarang saya juga membangun aplikasi untuk pekerjaan harian kebun, supaya mandor dan krani cukup mengisi data sekali dan rekapnya langsung siap dipakai kantor.</p>
+      </div>
+      <div class="quote">
+        <p>Data kebun yang rapi dimulai dari alat yang mudah dipakai mandor di lapangan.</p>
+        <small>Prinsip kerja saya dalam setiap aplikasi ESTACH</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pengalaman" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Pengalaman Kerja</h2><p>Ketuk bilah tahun untuk menyorot posisinya.</p></div>
+    <div class="career" role="group" aria-label="Linimasa karier 2014 sampai sekarang">
+      <button type="button" class="c1" style="grid-column:1 / span 3" data-job="j1">Best Agro</button>
+      <button type="button" class="c2" style="grid-column:4 / span 3" data-job="j2">Sawit Mas</button>
+      <button type="button" class="c3" style="grid-column:7 / span 4" data-job="j3">Nova · QC</button>
+      <button type="button" class="c4" style="grid-column:11 / span 3" data-job="j4">Nova · Agronomi</button>
+    </div>
+    <div class="years" aria-hidden="true"><span>2014</span><span>2015</span><span>2016</span><span>2017</span><span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span><span>2026</span></div>
+    <ol class="timeline">
+      <li id="j4">
+        <div class="when">Saat ini<small>PT. Nova Plantation</small></div>
+        <div><h3>Staff Asisten Agronomi <span class="badge">Sekarang</span></h3><p>Kelampai Estate. Program pemupukan, monitoring rotasi perawatan, serta digitalisasi BKM, peta kebun, sensus BBC, dan panen.</p></div>
+      </li>
+      <li id="j3">
+        <div class="when">2020 – 2023<small>PT. Nova Plantation</small></div>
+        <div><h3>Staff Quality Control</h3><p>Standar kerja, inspeksi lapangan, dan tindak lanjut temuan kualitas panen maupun perawatan.</p></div>
+      </li>
+      <li id="j2">
+        <div class="when">2017 – 2019<small>PT. Sawit Mas Parenggean</small></div>
+        <div><h3>Staff Kasie Agronomi</h3><p>Administrasi dan pelaporan agronomi.</p></div>
+      </li>
+      <li id="j1">
+        <div class="when">2014 – 2016<small>PT. Best Agro Plantation</small></div>
+        <div><h3>Admin Payroll · Admin Estate · Kasub Agronomi</h3><p>Awal karier: payroll, administrasi estate, lalu naik ke Kasub Agronomi.</p></div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="kemampuan" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Kemampuan</h2><p>Pilih kelompok untuk menyaring.</p></div>
+    <div class="filters" role="group" aria-label="Saring kemampuan">
+      <button type="button" data-f="all" aria-pressed="true">Semua</button>
+      <button type="button" data-f="lapangan" aria-pressed="false">Lapangan &amp; agronomi</button>
+      <button type="button" data-f="data" aria-pressed="false">Data &amp; sistem</button>
+      <button type="button" data-f="digital" aria-pressed="false">Digital &amp; kreatif</button>
+    </div>
+    <div class="skills" id="skills">
+      <article class="skill" data-cat="lapangan">
+        <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11M12 11C12 6 8 3 3 3c0 5 4 8 9 8zM12 11c0-4 3-7 8-7 0 4-3 7-8 7z"></path></svg></div>
+        <h3>Agronomi</h3><p>Siklus LC, TBM, TM. Program pemupukan, SPH, sensus produksi, dan rotasi perawatan: semprot, pruning, pupuk.</p><span class="tag">Lapangan</span>
+      </article>
+      <article class="skill" data-cat="lapangan">
+        <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"></path><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></div>
+        <h3>Quality Control</h3><p>Tiga tahun di QC: menyusun standar kerja, inspeksi lapangan, dan menindaklanjuti temuan kualitas.</p><span class="tag">Lapangan</span>
+      </article>
+      <article class="skill" data-cat="lapangan">
+        <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div>
+        <h3>Perencanaan &amp; anggaran</h3><p>Menyusun budget tahunan, membaginya per bulan dan per divisi, lalu mengendalikan realisasinya.</p><span class="tag">Lapangan</span>
+      </article>
+      <article class="skill" data-cat="data">
+        <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18M9 20V9"></path></svg></div>
+        <h3>Sistem perkebunan</h3><p>SAP (PT. Eagle High Plantation), PMS dan JVE (PT. Best Agro). Excel tingkat lanjut dan VBA/Macro, MYOB, FoxPro.</p><span class="tag">Data &amp; sistem</span>
+      </article>
+      <article class="skill" data-cat="data">
+        <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg></div>
+        <h3>Analisa data</h3><p>Audit pemupukan per blok: realisasi gudang dibanding lapangan, kepatuhan dosis, rekap per divisi, laporan semester.</p><span class="tag">Data &amp; sistem</span>
+      </article>
+      <article class="skill" data-cat="data">
+        <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"></path><path d="M9 4v14M15 6v14"></path></svg></div>
+        <h3>GIS &amp; IT</h3><p>Pemetaan blok dengan ArcGIS/ArcMap, jaringan LAN dan Mikrotik, Python dan HTML/JavaScript untuk otomasi laporan.</p><span class="tag">Data &amp; sistem</span>
+      </article>
+      <article class="skill" data-cat="digital">
+        <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M11 18h2"></path></svg></div>
+        <h3>Digitalisasi kebun</h3><p>Merancang dan membangun aplikasi estate sendiri: BKM, peta blok offline, sensus BBC, TPH panen, dan absensi wajah.</p><span class="tag">Digital &amp; kreatif</span>
+      </article>
+      <article class="skill" data-cat="digital">
+        <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"></rect><path d="M16 10l6-3v10l-6-3z"></path></svg></div>
+        <h3>Editing Video</h3><p>Menyunting video tutorial aplikasi kebun, video CSR, dan konten edukasi sawit dengan CapCut dan Camtasia, termasuk video berbasis AI.</p><span class="tag">Digital &amp; kreatif</span>
+      </article>
+    </div>
+    <div class="traits" aria-label="Karakter kerja">
+      <span>Disiplin &amp; berintegritas</span><span>Loyal &amp; bertanggung jawab</span><span>Mandiri maupun kerja tim</span><span>Terbiasa melatih mandor &amp; krani</span>
+    </div>
+  </div>
+</section>
+
+<section id="portofolio" class="port">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Portofolio Digitalisasi Kebun</h2><p>Lima aplikasi di bawah nama ESTACH (Smart Plantation Solution), dirancang dari alur kerja nyata di Kelampai Estate. Pilih aplikasi, lalu ketuk gambarnya untuk memperbesar.</p></div>
+
+    <div class="showcase">
+      <div class="tabs" role="tablist" aria-label="Pilih aplikasi" aria-orientation="vertical">
+        <button class="tab" role="tab" id="t-bkm" aria-controls="p-bkm" aria-selected="true">
+          <span class="ti"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span>
+          <span><b>BKM Digital</b><small>ESTACH WORK · Dipakai</small></span>
+        </button>
+        <button class="tab" role="tab" id="t-peta" aria-controls="p-peta" aria-selected="false" tabindex="-1">
+          <span class="ti"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"></path><path d="M9 4v14M15 6v14"></path></svg></span>
+          <span><b>Peta Kebun</b><small>ESTACH MAP · Pengembangan</small></span>
+        </button>
+        <button class="tab" role="tab" id="t-bbc" aria-controls="p-bbc" aria-selected="false" tabindex="-1">
+          <span class="ti"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"></path><circle cx="12" cy="12" r="3.5"></circle></svg></span>
+          <span><b>Sensus BBC</b><small>ESTACH VISION · Pengembangan</small></span>
+        </button>
+        <button class="tab" role="tab" id="t-tph" aria-controls="p-tph" aria-selected="false" tabindex="-1">
+          <span class="ti"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><path d="M14 14h3v3M21 14v7h-7"></path></svg></span>
+          <span><b>TPH Panen</b><small>ESTACH HARVEST · Pengembangan</small></span>
+        </button>
+        <button class="tab" role="tab" id="t-absen" aria-controls="p-absen" aria-selected="false" tabindex="-1">
+          <span class="ti"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg></span>
+          <span><b>Absen Apel Pagi</b><small>ESTACH ABSEN · Pengembangan</small></span>
+        </button>
+      </div>
+
+      <div>
+        <div class="panel wide" role="tabpanel" id="p-bkm" aria-labelledby="t-bkm">
+          <button class="device laptop" type="button" data-zoom="app-bkm.jpg" data-cap="BKM Digital · Beranda" aria-label="Perbesar screenshot BKM Digital">
+            <img src="app-bkm.jpg" alt="Beranda BKM Digital: ringkasan BKM, total upah, pupuk diaplikasikan, karyawan aktif, dan kalender monitoring input bulanan" width="1440" height="900">
+            <span class="zoom">Perbesar</span>
+          </button>
+          <div class="info">
+            <div>
+              <div class="prod">ESTACH WORK <span class="status s-live">Dipakai</span></div>
+              <h3>BKM Digital</h3>
+              <p>Program input Buku Kerja Mandor di kantor kebun. Beranda langsung menunjukkan hari kerja yang belum diinput, jadi tidak ada BKM yang tertinggal.</p>
+            </div>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Input Rawat dan Input Panen (Ha, janjang, BJR, kg, brondolan)</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Master karyawan, rekap absensi, rekap gaji KHT dan borongan</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Ekspor Excel, backup, dan sinkron ke server online</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-peta" aria-labelledby="t-peta" hidden>
+          <button class="device phone" type="button" data-zoom="app-peta.jpg" data-cap="Peta Kebun" aria-label="Perbesar screenshot Peta Kebun">
+            <img src="app-peta.jpg" alt="Peta Kebun: peta blok Kelampai Estate per afdeling dengan kompas dan alat ukur" width="540" height="1169"><span class="zoom">Perbesar</span>
+          </button>
+          <div class="info">
+            <div class="prod">ESTACH MAP <span class="status s-dev">Pengembangan</span></div>
+            <h3>Peta Kebun</h3>
+            <p>Peta estate ala Avenza di HP, bisa dipakai tanpa sinyal. Batas blok diambil dari peta blok tanam hasil ArcMap.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>133 blok per afdeling, posisi GPS, dan kompas</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Alat ukur jarak dan luas, lapisan peta, pencarian blok</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Bisa dipasang sebagai aplikasi Android</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-bbc" aria-labelledby="t-bbc" hidden>
+          <button class="device phone" type="button" data-zoom="app-bbc.jpg" data-cap="Sensus BBC" aria-label="Perbesar screenshot Sensus BBC">
+            <img src="app-bbc.jpg" alt="Sensus BBC: pilih divisi dan blok, lalu foto empat sisi pokok" width="540" height="1169"><span class="zoom">Perbesar</span>
+          </button>
+          <div class="info">
+            <div class="prod">ESTACH VISION <span class="status s-dev">Pengembangan</span></div>
+            <h3>Sensus BBC</h3>
+            <p>Sensus buah berbasis kamera. Mandor memotret pokok, AI menandai tandan, lalu mandor memeriksa hasilnya.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Foto 4 sisi pokok, koordinat GPS tersimpan per pokok</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Kategori Hitam 1, Hitam 2, Merah, dan B4</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Model AI berjalan langsung di HP</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-tph" aria-labelledby="t-tph" hidden>
+          <button class="device phone" type="button" data-zoom="app-tph.jpg" data-cap="TPH Panen" aria-label="Perbesar screenshot TPH Panen">
+            <img src="app-tph.jpg" alt="TPH Panen: peta TPH, tombol scan QR TPH dan buat SPB angkut ke pabrik" width="540" height="1169"><span class="zoom">Perbesar</span>
+          </button>
+          <div class="info">
+            <div class="prod">ESTACH HARVEST <span class="status s-dev">Pengembangan</span></div>
+            <h3>TPH Panen</h3>
+            <p>Setiap TPH punya alamat GPS dan QR unik. Krani memindai QR, mencatat buah per pemanen, lalu membuat SPB ke pabrik.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Cetak label QR TPH dan catat posisi di peta</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>AI menghitung janjang dari foto, krani mengisi mentah dan overripe</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Rekap panen, daftar pemanen, dan SPB angkut</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-absen" aria-labelledby="t-absen" hidden>
+          <button class="device phone" type="button" data-zoom="app-absen.jpg" data-cap="ESTACH Absen" aria-label="Perbesar screenshot ESTACH Absen">
+            <img src="app-absen.jpg" alt="ESTACH Absen: absensi apel pagi per kemandoran dengan kamera" width="540" height="1169"><span class="zoom">Perbesar</span>
+          </button>
+          <div class="info">
+            <div class="prod">ESTACH ABSEN <span class="status s-dev">Pengembangan</span></div>
+            <h3>Absen Apel Pagi</h3>
+            <p>Mandor mengabsen anggota kemandoran saat apel pagi dengan satu HP, memakai pengenal wajah AI yang jalan tanpa internet.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Absen satu per satu atau satu foto barisan</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Status S / I / C / M untuk yang tidak hadir</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Rekap bulanan dan ekspor CSV</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="extras">
+      <article class="extra">
+        <div class="prod">Excel · VBA · Python <span class="status s-live">Dipakai</span></div>
+        <h3>Monitoring &amp; Audit Pemupukan</h3>
+        <p>Bandingkan pengeluaran gudang dengan realisasi lapangan, cek kepatuhan dosis per blok (±5%), dan rekap per divisi.</p>
+      </article>
+      <article class="extra">
+        <div class="prod">Pelatihan <span class="status s-dev">Pengembangan</span></div>
+        <h3>BBC Mission</h3>
+        <p>Game pelatihan interaktif untuk mandor tentang cara melakukan sensus buah (BBC) dengan benar.</p>
+      </article>
+    </div>
+    <div class="legend">
+      <span><i style="background:#22B87C"></i>Dipakai: sudah digunakan di kebun</span>
+      <span><i style="background:var(--cyan)"></i>Pengembangan: versi awal sudah dibangun</span>
+    </div>
+  </div>
+</section>
+
+<section id="kontak">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Pendidikan &amp; Kontak</h2><p>Terbuka untuk peluang di agronomi, quality control, dan digitalisasi perkebunan.</p></div>
+    <div class="contact-wrap">
+      <ul class="edu">
+        <li><span class="yr">2010 – 2013</span><span><b>SMK N 1 Tepus</b><br>Jurusan Administrasi Perkantoran</span></li>
+        <li><span class="yr">2007 – 2010</span><span><b>SMP N 1 Tepus</b></span></li>
+        <li><span class="yr">2003 – 2007</span><span><b>SD N Pule Ireng</b></span></li>
+      </ul>
+      <div class="contact">
+        <h3>Mari berdiskusi</h3>
+        <p>Paling cepat lewat WhatsApp.</p>
+        <div class="crow">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.5A8.4 8.4 0 1 1 21 11.5z"></path></svg></span>
+          <div><small>WhatsApp</small><a href="https://wa.me/6282252693421">0822-5269-3421</a></div>
+          <button type="button" class="copy" data-copy="082252693421">Salin</button>
+        </div>
+        <div class="crow">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></span>
+          <div><small>Email</small><a href="mailto:wahyunugroho93@ymail.com">wahyunugroho93@ymail.com</a></div>
+          <button type="button" class="copy" data-copy="wahyunugroho93@ymail.com">Salin</button>
+        </div>
+        <div class="crow">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></span>
+          <div><small>Domisili</small><span class="v">Yogyakarta</span></div>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Wahyu Nugroho · Planter kelapa sawit</span>
+    <span>ESTACH · Smart Plantation Solution</span>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb" aria-label="Screenshot diperbesar">
+  <div class="bar"><b id="lbCap"></b><button type="button" id="lbClose">Tutup</button></div>
+  <img id="lbImg" alt="">
+</dialog>
+
+<script>
+const BLOCKS = [{"b":"I 01","a":"I","l":26.12,"d":"M514.4,202.1 520.5,205.1 524.9,205.1 524.9,202.5 593.5,204.4 594.7,207.7 588.2,211.5 587.6,221.1 594.2,225.8 595.4,232.7 496.3,231.2 496.9,201.8 514.4,202.1ZM595.4,208.5 595.7,225.4 595.1,225.4 589.2,221.4 588.7,214.7 590.0,211.4 595.4,208.5Z"},{"b":"I 02","a":"I","l":14.21,"d":"M562.9,202.5 568.7,196.4 575.2,194.8 576.3,191.3 579.7,190.2 581.8,191.4 582.1,196.6 588.1,194.2 591.0,198.8 590.4,203.4 562.9,202.5ZM512.6,181.3 537.1,183.6 538.1,193.8 555.7,194.6 556.4,201.5 524.9,202.3 527.5,192.2 525.5,190.4 515.7,189.9 515.5,201.8 497.0,201.0 497.3,186.4 512.6,181.3ZM573.3,183.1 562.4,188.5 561.9,190.6 564.0,191.6 560.9,193.5 559.6,202.5 558.2,201.8 559.5,178.1 576.7,178.3 573.3,183.1ZM497.3,185.4 498.4,180.7 500.1,177.0 502.2,183.6 497.3,185.4ZM532.7,178.2 537.8,177.2 537.8,183.1 532.0,180.8 532.7,178.2ZM532.5,176.9 530.8,180.7 514.1,180.6 502.8,183.6 500.6,176.3 532.5,176.9Z"},{"b":"I 03","a":"I","l":8.94,"d":"M583.1,173.8 576.7,177.9 560.3,177.6 560.6,167.0 583.0,165.8 583.1,173.8ZM497.6,156.7 527.8,156.9 527.2,164.2 533.6,164.4 533.4,175.9 500.2,175.6 497.6,167.3 497.6,156.7Z"},{"b":"I 04","a":"I","l":12.46,"d":"M549.7,146.6 549.6,153.8 540.8,153.6 540.8,151.1 528.3,150.9 527.8,156.9 497.6,156.3 498.1,130.3 529.3,129.9 530.3,124.3 541.2,129.0 541.1,139.3 547.4,138.9 547.5,146.5 549.7,146.6Z"},{"b":"I 05","a":"I","l":4.99,"d":"M529.3,129.7 498.1,130.2 498.0,114.8 523.5,115.1 523.0,122.4 529.3,124.0 529.3,129.7ZM517.6,113.8 498.0,114.6 498.0,111.0 502.5,113.2 507.0,109.1 512.6,108.6 517.6,113.8Z"},{"b":"I 06","a":"I","l":1.88,"d":"M576.8,80.4 577.6,83.6 572.3,83.0 573.6,91.6 569.9,92.3 566.7,90.5 568.3,83.9 563.9,81.7 559.9,83.0 560.5,88.6 557.3,90.5 546.7,82.8 548.0,80.0 576.8,80.4Z"},{"b":"I 07","a":"I","l":7.29,"d":"M595.0,56.7 594.8,64.5 579.9,64.0 579.6,72.3 574.6,71.8 576.8,80.4 548.0,80.0 550.8,72.9 554.5,73.5 553.8,61.6 556.8,56.2 595.0,56.7Z"},{"b":"I 08","a":"I","l":3.48,"d":"M595.4,40.5 595.2,56.7 556.8,56.2 568.3,47.8 589.4,47.3 591.0,43.8 588.9,39.5 590.8,37.2 595.4,40.5Z"},{"b":"I 09","a":"I","l":5.6,"d":"M613.1,423.8 619.9,425.8 611.4,429.2 606.6,426.8 613.1,423.8ZM642.5,412.7 632.6,423.0 625.4,423.4 619.6,420.1 597.4,427.8 593.3,420.0 603.8,411.9 642.5,412.7ZM645.7,418.1 645.2,415.3 648.1,412.7 659.3,413.0 657.8,415.6 645.7,418.1Z"},{"b":"I 10","a":"I","l":21.77,"d":"M626.2,385.7 692.4,386.4 692.1,405.5 668.9,412.8 603.7,411.3 605.0,399.4 615.3,384.5 621.5,385.9 622.0,391.2 626.2,385.7Z"},{"b":"I 11","a":"I","l":16.22,"d":"M693.0,363.0 692.4,386.4 629.7,384.8 629.2,378.8 618.3,368.7 621.3,368.1 619.4,361.7 671.3,362.7 677.5,359.9 683.2,362.8 693.0,363.0Z"},{"b":"I 12","a":"I","l":18.67,"d":"M693.5,336.3 693.0,362.6 683.0,362.5 677.1,359.5 671.7,362.1 619.5,361.3 624.7,344.1 620.3,335.1 693.5,336.3Z"},{"b":"I 13","a":"I","l":18.17,"d":"M692.7,323.1 693.5,335.8 680.9,334.6 690.5,323.5 692.7,323.1ZM681.5,311.2 679.9,317.9 672.8,327.8 670.8,335.8 620.2,334.5 601.1,323.9 598.7,318.4 603.5,316.1 608.8,318.0 605.9,314.4 608.0,310.1 681.5,311.2Z"},{"b":"I 14","a":"I","l":19.73,"d":"M666.7,299.4 676.7,298.6 679.0,294.1 682.9,293.2 683.4,285.7 693.8,285.9 693.7,296.1 688.9,296.1 687.6,307.1 689.0,311.2 608.0,310.1 604.6,304.9 612.6,298.2 624.1,285.2 665.7,286.1 651.9,295.3 652.4,297.3 662.3,295.8 666.7,299.4ZM623.1,285.0 609.6,299.8 605.1,295.8 595.2,299.1 595.5,284.6 623.1,285.0Z"},{"b":"I 15","a":"I","l":21.03,"d":"M675.6,260.5 680.8,261.9 682.9,264.2 682.1,271.7 678.7,276.0 679.7,280.2 674.6,285.6 624.3,284.8 635.9,272.1 644.5,260.1 675.6,260.5ZM596.0,259.3 643.6,260.1 623.3,284.5 595.6,284.2 596.0,259.3Z"},{"b":"I 16","a":"I","l":13.04,"d":"M672.1,250.8 672.4,253.3 677.7,255.7 676.9,259.9 645.6,259.6 663.0,250.9 667.1,246.5 672.1,250.8ZM655.3,250.3 651.7,255.6 641.1,259.5 656.4,241.7 653.4,247.7 655.3,250.3ZM639.9,259.5 596.0,258.6 596.4,233.3 630.6,234.1 639.9,259.5Z"},{"b":"I 17","a":"I","l":11.59,"d":"M668.0,215.7 663.5,224.7 654.1,228.6 655.7,230.0 654.4,231.0 647.2,230.5 643.4,227.7 652.2,225.9 658.7,223.9 659.2,222.1 640.8,227.8 634.7,234.0 596.4,232.7 597.5,219.7 600.0,223.1 608.7,224.9 613.4,221.1 622.6,226.0 625.3,223.4 628.9,212.7 618.4,204.1 641.0,204.6 654.7,212.7 665.2,212.3 668.0,215.7Z"},{"b":"I 18","a":"I","l":15.67,"d":"M697.2,181.6 690.7,185.0 700.3,193.4 686.3,208.3 678.3,208.1 674.4,190.0 671.5,188.9 670.9,193.2 661.2,181.9 654.1,184.4 651.6,183.1 652.1,180.2 697.2,181.6ZM655.3,212.3 641.1,204.1 610.3,202.8 612.7,198.5 611.0,195.4 612.1,187.8 617.7,185.4 615.8,174.8 641.5,182.1 644.9,178.2 648.2,180.9 645.8,191.6 652.3,198.4 653.3,202.4 651.7,204.3 655.3,212.3Z"},{"b":"I 19","a":"I","l":10.42,"d":"M695.8,158.0 695.3,180.8 652.3,179.9 654.5,157.1 650.6,156.9 650.2,154.5 695.8,158.0Z"},{"b":"I 20","a":"I","l":12.21,"d":"M606.2,132.6 670.8,134.3 669.6,142.0 674.8,146.5 677.2,142.6 680.0,144.7 680.7,134.4 695.8,134.6 696.0,157.3 650.2,154.5 650.6,146.5 644.5,148.4 643.9,150.3 640.3,142.8 633.0,142.1 632.4,139.1 607.4,136.4 606.2,132.6Z"},{"b":"I 21","a":"I","l":25.42,"d":"M696.1,134.1 602.3,131.4 605.4,119.9 595.5,115.4 596.7,102.7 609.2,106.0 614.8,104.9 616.5,106.9 696.6,108.3 696.1,134.1Z"},{"b":"I 22","a":"I","l":25.04,"d":"M697.0,82.5 696.5,107.6 616.5,106.9 614.8,104.9 602.7,104.9 596.7,102.7 599.7,94.0 604.2,92.5 595.7,88.7 594.7,85.6 594.8,81.2 697.0,82.5Z"},{"b":"I 23","a":"I","l":21.44,"d":"M595.2,56.7 628.4,57.2 628.5,65.5 634.0,70.8 636.8,70.3 640.1,75.9 639.4,79.0 641.2,79.2 655.6,78.4 643.2,55.3 650.2,57.8 675.4,57.6 688.7,57.0 696.6,53.6 696.9,82.1 594.8,80.8 595.2,56.7Z"},{"b":"I 24","a":"I","l":12.51,"d":"M673.5,52.9 682.3,53.9 682.7,51.4 690.0,50.7 694.9,51.5 695.9,53.6 687.8,56.8 648.6,57.3 642.9,54.9 641.7,57.3 636.4,56.4 628.6,59.0 628.9,55.3 628.6,46.3 668.5,46.0 668.4,49.1 673.5,52.9ZM628.5,56.2 595.2,56.7 595.4,40.5 606.2,52.6 611.8,51.6 612.3,47.0 609.2,45.3 602.3,34.7 619.4,31.2 625.1,26.8 627.8,27.5 628.5,56.2Z"},{"b":"I 25","a":"I","l":2.88,"d":"M713.3,387.6 711.7,395.3 704.9,393.4 705.0,397.4 708.9,399.3 692.3,405.5 692.8,385.2 697.5,383.9 700.9,386.8 713.3,387.6Z"},{"b":"I 26","a":"I","l":6.27,"d":"M712.1,363.5 708.8,367.5 713.1,386.6 693.1,384.4 693.5,363.1 712.1,363.5ZM791.2,363.5 790.1,376.6 777.9,375.5 777.4,370.9 773.0,369.3 768.0,370.4 769.3,367.0 767.0,363.9 791.2,363.5Z"},{"b":"I 27","a":"I","l":14.85,"d":"M791.2,363.0 767.0,363.9 759.0,359.8 756.7,355.9 766.6,347.7 768.0,337.6 791.3,337.8 791.2,363.0ZM726.1,336.6 723.9,340.0 725.0,345.1 720.5,352.4 723.1,358.0 717.3,359.1 712.5,363.1 693.5,362.7 693.8,336.3 726.1,336.6Z"},{"b":"I 28","a":"I","l":15.95,"d":"M791.7,313.5 791.3,337.4 768.1,337.1 773.0,323.5 763.4,317.1 764.3,312.4 791.7,313.5ZM730.2,313.1 742.6,306.8 742.6,319.8 740.4,321.8 729.8,317.9 727.0,314.9 722.5,317.0 730.0,324.0 730.4,330.9 733.7,334.3 729.0,333.4 727.0,336.3 693.9,336.0 693.9,328.1 702.9,316.3 694.2,314.8 694.2,312.1 730.2,313.1ZM756.0,309.0 762.6,311.2 764.0,324.0 758.2,325.1 754.6,311.4 756.0,309.0Z"},{"b":"I 29","a":"I","l":15.63,"d":"M720.1,311.9 695.8,310.7 694.2,307.7 698.9,296.3 700.2,298.7 706.7,299.5 710.1,302.1 710.2,305.0 719.6,309.6 720.1,311.9ZM754.2,304.9 741.1,307.2 728.3,314.3 728.5,306.2 725.3,297.6 726.3,293.3 732.5,290.5 732.9,287.6 739.3,288.5 741.3,292.3 743.3,290.2 748.6,289.7 750.2,296.7 753.5,299.3 754.2,304.9ZM792.2,287.3 791.9,312.0 764.9,312.0 757.0,308.2 759.1,290.6 761.0,289.7 757.6,287.3 745.0,285.8 792.2,287.3Z"},{"b":"I 30","a":"I","l":14.2,"d":"M793.0,261.0 792.4,286.1 740.3,285.6 739.6,282.0 731.4,278.1 727.8,270.4 738.2,270.7 744.6,265.7 745.0,260.0 750.0,259.6 754.0,261.5 756.9,268.7 760.8,270.1 770.6,255.6 775.9,253.2 778.7,253.3 783.2,260.8 793.0,261.0Z"},{"b":"I 31","a":"I","l":7.47,"d":"M793.4,235.2 793.0,260.7 784.6,260.5 779.6,253.5 774.8,252.7 770.6,254.5 759.3,268.0 754.2,257.1 763.0,252.8 765.9,238.1 769.8,234.9 793.4,235.2Z"},{"b":"I 32","a":"I","l":26.65,"d":"M793.8,210.3 793.4,234.8 766.3,234.5 764.4,230.0 768.1,219.9 757.5,221.3 753.0,233.3 757.9,235.3 744.3,235.2 729.8,238.7 724.7,238.7 723.4,234.1 720.0,234.1 719.5,238.6 708.6,236.3 708.2,232.5 704.0,234.1 701.3,231.5 698.7,236.0 696.1,234.4 694.7,226.6 693.6,230.1 689.7,229.7 681.8,223.7 686.8,208.8 793.8,210.3Z"},{"b":"I 33","a":"I","l":24.43,"d":"M794.2,184.1 793.8,208.8 687.2,208.3 714.3,182.0 794.2,184.1Z"},{"b":"I 34","a":"I","l":19.4,"d":"M727.9,167.1 713.8,181.4 696.2,181.0 696.5,157.9 715.3,159.7 727.9,167.1ZM794.5,152.0 794.5,157.9 790.4,158.3 786.3,164.8 787.6,179.3 790.5,181.3 792.4,179.4 794.2,183.4 715.8,180.9 739.4,158.3 753.9,158.6 764.1,163.2 775.7,162.6 776.3,167.4 794.5,152.0Z"},{"b":"I 35","a":"I","l":14.2,"d":"M764.1,163.1 753.9,158.4 739.6,157.8 747.0,149.3 750.4,149.3 763.6,157.9 764.1,163.1ZM773.7,138.9 785.5,139.8 787.4,136.0 794.8,136.0 794.5,152.0 776.3,167.4 775.8,163.5 779.4,160.0 782.7,150.2 772.7,140.9 773.7,138.9ZM696.8,134.7 741.1,135.2 733.3,150.1 729.2,152.0 722.0,151.5 720.8,154.1 720.9,156.9 729.6,165.9 728.3,166.9 714.9,159.3 696.6,157.3 696.8,134.7Z"},{"b":"I 36","a":"I","l":14.48,"d":"M755.3,126.9 746.5,126.6 741.7,134.7 696.7,133.9 697.2,108.3 741.5,108.8 741.2,116.3 756.7,123.2 755.3,126.9ZM795.0,109.9 794.8,130.6 794.4,130.6 789.8,125.4 789.4,121.3 785.4,118.7 785.9,115.3 780.0,110.9 795.0,109.9Z"},{"b":"I 37","a":"I","l":14.65,"d":"M795.3,83.7 795.2,109.1 780.3,109.4 794.1,94.0 792.0,89.7 789.4,93.1 782.3,87.4 787.7,83.5 795.3,83.7ZM766.8,84.6 767.8,86.4 764.5,92.2 759.1,88.4 755.2,89.8 758.9,92.9 754.7,96.4 758.3,104.8 753.2,104.4 744.0,99.4 741.9,108.5 697.2,107.8 697.7,82.6 720.1,82.8 723.3,97.6 731.7,99.2 739.0,93.4 740.9,83.4 766.8,84.6Z"},{"b":"I 38","a":"I","l":20.12,"d":"M761.7,77.9 764.5,83.0 741.0,83.0 738.5,77.9 734.6,81.3 729.1,77.0 722.2,76.5 720.1,82.3 697.4,82.1 697.7,46.0 710.0,46.1 718.4,53.1 733.5,56.2 736.9,61.6 740.6,59.9 749.7,63.2 771.0,62.2 792.6,80.3 783.4,85.4 777.7,92.3 774.1,91.2 778.0,78.3 777.5,73.4 776.8,70.2 768.2,64.7 761.7,77.9ZM795.4,83.2 789.3,82.7 795.2,80.1 795.4,83.2Z"},{"b":"J 01","a":"J","l":6.98,"d":"M821.2,369.6 816.0,375.6 791.5,375.9 791.6,363.6 819.6,364.3 821.2,369.6ZM888.5,365.0 888.5,374.9 871.4,373.4 868.5,371.1 842.6,371.5 840.8,364.5 888.5,365.0Z"},{"b":"J 02","a":"J","l":22.7,"d":"M888.7,364.7 791.7,362.9 792.0,337.9 854.7,338.9 862.7,349.5 872.7,340.3 872.0,338.5 878.5,338.5 878.5,345.3 888.7,351.9 888.7,364.7Z"},{"b":"J 03","a":"J","l":19.33,"d":"M858.5,322.9 872.6,314.2 890.6,314.3 891.2,315.8 878.1,325.5 878.5,338.5 872.0,338.5 869.2,328.2 859.1,325.5 851.2,330.2 855.1,338.3 792.0,337.4 792.5,312.5 850.5,313.5 858.5,322.9Z"},{"b":"J 04","a":"J","l":13.17,"d":"M871.0,287.8 889.7,288.2 888.9,311.4 890.6,314.3 873.0,314.2 877.1,309.5 877.1,305.0 881.2,302.3 881.9,295.9 874.0,292.3 871.0,287.8ZM851.6,312.8 792.5,311.8 792.9,286.6 815.4,286.8 815.7,304.7 821.3,309.7 824.1,308.4 825.5,303.6 825.6,287.8 838.1,287.9 838.9,306.9 849.8,309.9 851.6,312.8Z"},{"b":"J 05","a":"J","l":7.0,"d":"M891.6,277.7 889.8,279.9 889.7,287.9 871.0,287.8 871.9,283.6 879.7,279.2 891.6,277.7ZM818.2,261.2 818.1,271.9 814.6,272.1 814.9,275.3 813.2,275.7 808.3,286.7 793.0,286.1 793.5,260.8 818.2,261.2Z"},{"b":"J 06","a":"J","l":8.37,"d":"M831.1,241.6 829.0,254.5 819.3,259.5 819.7,260.9 793.6,260.4 794.0,235.5 829.5,237.6 831.1,241.6Z"},{"b":"J 07","a":"J","l":10.55,"d":"M854.0,210.6 850.6,212.8 844.2,223.6 820.6,229.5 814.2,227.2 810.9,235.0 794.0,234.9 794.4,209.7 854.0,210.6Z"},{"b":"J 08","a":"J","l":20.04,"d":"M895.1,185.6 894.9,191.3 877.4,191.7 870.3,199.2 865.1,200.5 863.7,205.4 854.5,210.2 794.1,208.9 794.5,184.1 895.1,185.6Z"},{"b":"J 09","a":"J","l":21.21,"d":"M817.7,170.4 831.2,167.3 832.5,164.6 831.3,157.2 893.7,157.8 895.1,158.6 895.1,184.6 794.7,182.8 798.0,179.1 817.7,170.4Z"},{"b":"J 10","a":"J","l":14.5,"d":"M812.7,138.5 798.7,152.3 794.8,153.4 795.3,136.1 812.3,136.2 812.7,138.5ZM854.9,142.3 849.5,131.5 895.9,132.2 895.4,157.2 831.0,156.6 834.0,150.6 839.2,153.7 839.9,148.9 846.2,151.6 854.9,142.3Z"},{"b":"J 11","a":"J","l":14.85,"d":"M823.5,118.7 824.0,123.8 812.0,129.9 811.7,135.2 795.4,135.6 795.8,109.6 819.9,109.9 820.4,118.8 823.5,118.7ZM896.1,131.8 849.1,131.0 846.6,122.2 834.3,116.6 836.4,113.7 844.2,114.8 850.9,119.8 853.7,107.5 857.4,108.2 861.3,103.3 870.8,107.0 874.3,113.7 884.7,118.7 886.5,123.5 896.1,126.7 896.1,131.8Z"},{"b":"J 12","a":"J","l":4.48,"d":"M823.1,99.9 819.1,109.6 795.8,109.1 796.1,83.6 810.9,83.9 805.1,86.6 804.1,90.4 811.1,96.0 812.9,100.3 820.0,97.9 823.1,99.9Z"},{"b":"J 13","a":"J","l":1.05,"d":"M796.2,80.0 810.6,73.5 812.9,80.1 810.9,83.5 796.1,83.1 796.2,80.0Z"},{"b":"J 14","a":"J","l":9.5,"d":"M995.6,372.4 989.5,374.3 988.9,379.6 967.9,376.4 942.8,378.6 940.2,377.0 944.2,365.8 993.4,366.6 995.6,372.4ZM929.2,365.6 929.0,374.0 925.3,375.0 898.7,374.8 896.9,371.0 894.4,372.4 894.4,374.9 888.8,375.0 889.2,364.9 929.2,365.6Z"},{"b":"J 15","a":"J","l":17.56,"d":"M900.1,357.5 912.5,350.5 933.6,359.7 936.2,365.3 889.0,364.7 889.2,352.3 896.9,355.4 896.9,361.8 900.1,357.5ZM993.4,341.2 992.2,366.3 943.8,365.4 940.6,346.0 943.5,340.2 993.4,341.2Z"},{"b":"J 16","a":"J","l":13.18,"d":"M994.0,315.9 993.6,340.7 979.5,340.6 945.6,339.8 944.1,325.2 940.1,318.9 936.3,319.7 934.1,315.1 994.0,315.9Z"},{"b":"J 17","a":"J","l":21.04,"d":"M889.8,311.9 898.0,306.1 894.2,317.2 889.8,311.9ZM994.3,290.2 994.0,315.1 933.6,314.1 923.3,300.3 913.9,294.0 898.2,299.3 895.1,302.2 897.0,304.1 889.6,309.3 890.3,288.3 994.3,290.2Z"},{"b":"J 18","a":"J","l":24.93,"d":"M994.7,264.4 994.3,289.6 890.1,287.8 890.1,279.7 894.6,277.8 894.8,273.7 902.9,270.7 906.5,262.8 994.7,264.4Z"},{"b":"J 19","a":"J","l":13.74,"d":"M908.1,262.6 924.1,259.6 922.6,254.0 935.1,252.0 936.5,248.1 940.2,249.1 942.6,247.3 952.5,256.2 957.5,245.8 958.5,238.5 995.4,238.9 994.8,263.7 908.1,262.6Z"},{"b":"J 20","a":"J","l":13.87,"d":"M996.2,213.4 995.5,238.6 950.5,236.8 954.4,229.4 960.8,228.3 965.7,225.9 975.4,213.1 996.2,213.4ZM960.3,226.6 953.8,229.0 951.2,233.2 945.0,228.8 938.6,236.2 936.7,221.8 934.3,222.0 934.6,227.3 926.8,221.1 923.1,212.1 958.2,212.9 960.3,226.6Z"},{"b":"J 21","a":"J","l":20.86,"d":"M996.3,187.8 996.2,212.9 927.8,212.0 923.4,201.3 921.4,208.8 913.4,201.6 904.5,204.9 904.6,191.3 894.9,191.3 895.1,185.7 963.1,186.8 960.4,202.0 967.5,204.3 972.5,203.4 970.2,197.9 974.2,187.1 996.3,187.8Z"},{"b":"J 22","a":"J","l":18.89,"d":"M996.7,159.6 996.3,186.8 927.8,185.2 928.2,158.4 996.7,159.6ZM898.6,158.6 896.9,160.4 896.1,176.4 896.2,157.8 898.6,158.6Z"},{"b":"J 22-1","a":"J","l":2.98,"d":"M910.4,181.4 903.4,181.4 903.3,178.3 908.3,178.0 907.9,170.6 911.8,170.7 910.4,181.4ZM903.3,177.4 903.3,173.2 903.4,171.5 904.5,176.8 903.3,177.4ZM902.3,172.1 902.4,176.8 901.3,177.0 900.5,171.3 902.3,172.1ZM903.4,171.0 904.9,170.5 904.9,171.2 903.4,171.0ZM907.2,169.2 906.1,169.7 906.0,169.2 907.2,169.2ZM904.6,168.9 901.5,169.6 901.5,168.8 904.6,168.9ZM911.4,163.1 908.9,163.1 907.5,169.3 907.5,163.1 903.4,163.3 903.5,160.0 911.5,160.1 911.4,163.1ZM927.1,178.9 926.7,184.6 918.6,184.3 919.6,178.2 927.1,178.9ZM917.9,181.2 911.7,181.1 912.5,178.7 916.4,178.3 916.7,171.4 912.5,170.6 917.8,171.0 917.9,181.2ZM920.9,177.4 919.2,177.4 920.4,170.6 920.9,170.7 920.9,177.4ZM917.1,169.5 917.6,163.5 917.8,169.5 917.1,169.5ZM918.8,169.7 919.7,159.4 928.2,159.2 928.1,169.6 918.8,169.7Z"},{"b":"J 23","a":"J","l":25.51,"d":"M896.6,132.4 997.3,134.1 996.7,159.1 895.9,157.6 896.6,132.4Z"},{"b":"J 24","a":"J","l":23.41,"d":"M905.5,116.3 913.8,114.4 914.4,108.3 919.3,107.2 997.7,108.5 997.3,133.6 896.4,131.7 896.4,126.7 903.9,124.7 903.5,119.1 905.5,116.3Z"},{"b":"J 25","a":"J","l":16.87,"d":"M900.2,81.9 945.8,82.3 947.2,85.3 956.2,88.3 960.1,93.6 960.0,102.7 966.1,100.6 966.1,95.9 978.9,94.6 984.2,83.9 989.6,87.6 994.7,95.0 998.0,102.0 997.8,107.8 918.7,106.6 915.3,94.9 903.3,87.1 900.2,81.9ZM902.3,91.7 905.2,88.4 907.8,90.8 902.3,91.7Z"},{"b":"J 26","a":"J","l":10.8,"d":"M921.2,81.8 924.2,80.4 925.5,81.8 921.2,81.8ZM999.4,58.4 998.6,73.5 995.5,72.1 989.1,74.1 985.4,70.2 972.3,65.2 971.5,69.8 968.5,71.6 966.6,67.4 961.1,68.6 954.6,64.0 948.6,72.9 945.2,73.4 944.5,76.6 949.6,79.4 949.9,81.6 924.1,80.0 920.7,81.8 900.2,81.9 901.9,77.3 907.2,74.2 916.6,72.3 918.2,77.1 929.9,72.0 939.2,70.7 938.8,65.7 944.8,57.8 999.4,58.4Z"},{"b":"J 27","a":"J","l":19.23,"d":"M999.6,32.9 999.4,57.7 944.7,57.2 945.4,54.6 940.0,51.2 935.0,43.8 926.0,41.9 924.2,39.7 910.1,38.5 908.6,35.3 913.3,36.5 924.7,30.7 999.6,32.9ZM907.7,32.2 906.4,31.3 906.2,30.9 905.4,31.2 900.8,37.7 897.9,33.8 892.6,35.8 887.0,29.0 900.4,23.7 905.6,27.5 907.7,32.2Z"},{"b":"J 28","a":"J","l":17.02,"d":"M924.2,30.5 910.8,36.1 903.6,24.0 898.8,23.0 906.1,21.1 909.8,29.9 924.2,30.5ZM895.2,24.3 887.1,28.1 886.5,30.9 882.9,29.4 883.5,26.9 892.1,22.1 895.2,24.3ZM999.7,32.2 926.3,30.3 927.3,24.9 937.7,9.3 938.3,1.0 946.7,0.0 950.2,11.7 958.5,10.0 962.5,11.6 965.0,19.3 969.4,16.4 970.3,18.4 977.4,17.5 978.1,12.1 981.7,11.7 984.4,7.5 992.4,3.5 998.1,5.8 1000.0,8.7 999.7,32.2Z"},{"b":"PC04-2","a":"PCSB","l":0.89,"d":"M20.8,379.5 26.1,382.2 23.1,390.3 15.2,380.3 20.8,379.5ZM5.5,378.0 10.5,376.6 12.8,376.9 19.2,378.8 13.3,377.3 8.0,380.9 5.5,378.0Z"},{"b":"PC05-1","a":"PCSB","l":0.22,"d":"M13.2,376.3 8.5,376.1 9.0,371.0 12.7,371.2 13.2,376.3Z"},{"b":"PC39-1","a":"PCSB","l":1.99,"d":"M393.7,275.0 378.6,277.6 374.6,275.7 373.2,277.7 372.7,266.3 377.5,268.4 379.0,266.0 389.1,265.5 393.9,271.1 393.7,275.0Z"},{"b":"PC46-1","a":"PCSB","l":0.21,"d":"M483.1,337.3 485.5,329.3 488.1,328.2 487.2,330.0 489.1,331.2 483.1,337.3Z"},{"b":"PCSB01","a":"PCSB","l":0.68,"d":"M89.1,462.7 82.4,462.5 72.8,458.9 89.1,457.4 89.1,462.7Z"},{"b":"PCSB02","a":"PCSB","l":4.92,"d":"M63.8,455.0 68.2,449.8 81.6,453.8 82.1,451.1 79.5,446.9 71.7,443.9 64.3,430.5 88.3,431.0 88.5,456.8 72.6,458.4 63.8,455.0Z"},{"b":"PCSB03","a":"PCSB","l":5.32,"d":"M88.4,430.4 63.1,429.6 61.6,426.4 73.0,419.8 66.0,405.8 88.7,405.0 88.4,430.4Z"},{"b":"PCSB04","a":"PCSB","l":9.22,"d":"M88.8,405.0 65.8,405.7 65.7,403.8 89.5,382.1 88.8,405.0ZM63.6,386.0 63.2,379.3 89.5,379.2 89.4,381.7 72.7,395.6 70.0,390.0 63.6,386.0ZM30.8,380.3 30.5,395.2 27.1,397.2 20.2,393.9 19.7,391.6 14.7,393.7 9.5,391.1 0.0,374.5 2.6,373.3 8.0,380.9 13.3,377.3 30.8,380.3ZM53.5,379.3 54.6,381.4 45.5,384.6 36.7,378.9 53.5,379.3Z"},{"b":"PCSB05","a":"PCSB","l":17.71,"d":"M13.2,376.3 12.7,371.2 8.0,370.8 5.3,365.8 8.5,360.7 14.6,356.9 22.5,360.7 24.0,367.8 32.6,364.1 29.4,356.8 31.7,353.7 89.8,354.1 89.5,379.2 58.8,379.3 55.8,377.4 61.2,373.4 58.2,356.5 55.1,362.9 54.3,379.2 32.0,378.4 27.0,380.3 13.2,376.3Z"},{"b":"PCSB06","a":"PCSB","l":14.19,"d":"M30.2,327.9 90.3,328.2 89.9,353.4 31.9,353.3 42.1,346.7 28.2,331.6 30.2,327.9Z"},{"b":"PCSB07","a":"PCSB","l":13.46,"d":"M36.8,317.7 33.6,320.1 28.7,326.7 24.6,324.8 25.0,321.4 28.9,321.6 30.5,318.0 36.8,317.7ZM30.5,327.6 36.9,318.1 41.3,323.9 43.0,322.6 39.1,316.8 60.7,303.2 90.6,302.7 90.3,328.1 30.5,327.6ZM58.7,303.7 39.8,315.3 39.0,316.2 40.3,306.5 51.4,303.5 58.7,303.7Z"},{"b":"PCSB08","a":"PCSB","l":0.83,"d":"M90.7,297.5 90.6,302.5 70.9,302.2 85.2,295.1 90.7,297.5Z"},{"b":"PCSB09","a":"PCSB","l":5.5,"d":"M149.3,507.2 192.8,507.8 192.7,513.7 172.6,514.2 162.0,531.6 157.3,530.5 154.0,523.1 151.7,522.9 149.4,519.3 149.3,507.2Z"},{"b":"PCSB10","a":"PCSB","l":19.11,"d":"M143.6,486.3 133.4,492.6 121.9,495.2 121.2,504.4 116.2,509.3 109.9,511.0 107.8,510.5 106.4,502.5 104.6,502.7 95.9,494.4 94.0,487.8 95.0,483.4 101.6,482.0 144.4,482.2 143.6,486.3ZM146.9,482.3 193.5,483.3 192.7,507.4 149.3,507.0 149.6,493.8 146.9,482.3Z"},{"b":"PCSB11","a":"PCSB","l":24.39,"d":"M194.0,458.1 193.6,482.3 192.1,483.1 101.6,482.0 93.9,466.1 89.5,462.7 89.5,457.4 194.0,458.1Z"},{"b":"PCSB12","a":"PCSB","l":27.4,"d":"M193.9,457.7 90.0,456.2 89.1,431.0 194.1,432.3 193.9,457.7Z"},{"b":"PCSB13","a":"PCSB","l":26.78,"d":"M194.8,406.3 194.1,431.7 89.0,430.3 89.2,405.0 194.8,406.3Z"},{"b":"PCSB14","a":"PCSB","l":26.66,"d":"M195.4,381.0 194.9,406.1 89.3,404.7 89.9,381.8 93.1,379.6 195.4,381.0Z"},{"b":"PCSB15","a":"PCSB","l":26.93,"d":"M195.6,355.5 195.4,380.6 89.8,380.4 90.3,354.1 195.6,355.5Z"},{"b":"PCSB16","a":"PCSB","l":26.87,"d":"M195.8,355.0 90.2,353.6 90.7,328.5 195.7,329.8 195.8,355.0Z"},{"b":"PCSB17","a":"PCSB","l":25.08,"d":"M160.4,309.2 165.1,310.2 166.3,305.8 175.7,313.1 179.2,308.3 182.2,316.5 183.9,311.6 190.8,304.5 196.0,304.5 195.8,329.4 90.7,327.9 90.9,302.8 159.3,303.4 160.4,309.2Z"},{"b":"PCSB18","a":"PCSB","l":6.86,"d":"M101.1,293.0 102.7,297.4 101.5,302.7 91.1,302.5 90.9,297.4 88.6,294.6 101.1,293.0ZM159.2,303.1 107.1,303.0 107.1,299.9 119.2,283.4 126.7,284.3 137.1,289.9 139.4,295.3 145.0,292.8 147.8,297.6 156.0,297.7 159.2,303.1Z"},{"b":"PCSB19","a":"PCSB","l":10.26,"d":"M292.0,531.0 284.0,529.8 257.4,518.7 242.5,518.7 231.8,507.4 293.5,507.7 292.0,531.0ZM227.6,512.5 218.3,513.2 216.7,513.0 223.8,509.2 231.8,509.3 227.6,512.5ZM213.9,512.6 192.8,513.6 193.0,507.8 217.5,507.6 213.9,512.6Z"},{"b":"PCSB20","a":"PCSB","l":23.81,"d":"M294.4,484.0 293.4,507.4 193.0,507.5 193.9,483.2 294.4,484.0Z"},{"b":"PCSB21","a":"PCSB","l":25.51,"d":"M194.9,458.0 294.8,458.4 294.6,483.2 194.0,482.3 194.9,458.0Z"},{"b":"PCSB22","a":"PCSB","l":23.65,"d":"M295.3,434.6 294.7,458.2 277.5,458.4 280.4,449.0 284.4,444.0 274.9,436.9 269.4,453.7 271.4,458.4 194.4,457.2 194.7,432.3 295.3,434.6Z"},{"b":"PCSB23","a":"PCSB","l":23.19,"d":"M295.3,432.7 275.4,433.2 269.0,417.3 275.0,407.8 295.8,407.8 295.3,432.7ZM267.6,418.7 260.5,425.4 261.0,430.7 264.7,430.2 265.9,432.9 203.0,431.8 204.3,427.4 200.4,421.1 196.6,422.4 200.1,431.7 194.6,431.7 195.4,406.5 264.9,407.5 267.6,418.7Z"},{"b":"PCSB24","a":"PCSB","l":17.41,"d":"M265.1,407.1 195.5,406.1 195.9,381.1 275.8,381.4 261.3,390.7 257.6,395.5 265.1,407.1Z"},{"b":"PCSB25","a":"PCSB","l":20.9,"d":"M255.0,356.6 254.5,365.7 264.5,380.4 270.3,380.4 270.3,378.9 268.6,372.4 263.5,368.5 258.7,359.9 258.9,356.3 284.8,356.5 289.7,370.3 275.6,381.1 195.8,380.6 196.1,355.2 255.0,356.6Z"},{"b":"PCSB26","a":"PCSB","l":11.87,"d":"M284.7,356.3 259.4,356.1 265.2,354.8 266.6,350.1 258.5,352.7 257.1,348.3 269.5,341.6 280.7,340.9 284.7,356.3ZM250.2,356.3 196.1,355.0 196.2,329.8 226.6,330.3 223.2,335.2 226.1,336.7 224.7,345.3 226.9,348.8 231.1,351.5 246.1,352.1 250.2,354.1 250.2,356.3ZM297.7,331.8 297.0,341.0 296.2,341.4 293.3,331.9 297.7,331.8Z"},{"b":"PCSB27","a":"PCSB","l":6.95,"d":"M297.7,331.5 292.7,331.3 288.6,321.5 297.9,321.7 297.7,331.5ZM214.8,304.8 218.1,308.6 222.1,309.2 221.9,316.9 217.5,317.8 216.6,320.0 226.9,329.9 196.3,329.4 196.3,304.5 214.8,304.8Z"},{"b":"PCSB28","a":"PCSB","l":0.52,"d":"M196.0,304.5 190.8,304.5 196.0,300.6 196.0,304.5ZM201.4,302.9 209.1,302.6 214.2,304.4 196.3,304.4 196.3,300.5 201.4,302.9Z"},{"b":"PCSB29","a":"PCSB","l":6.65,"d":"M293.4,528.1 293.8,507.7 314.1,508.2 322.1,521.6 333.7,513.4 338.4,512.5 341.1,515.7 338.7,520.5 319.4,527.4 295.5,529.7 293.4,528.1Z"},{"b":"PCSB30","a":"PCSB","l":5.23,"d":"M295.6,483.9 316.8,484.0 316.1,505.2 313.9,508.1 293.9,506.7 295.6,483.9Z"},{"b":"PCSB31","a":"PCSB","l":13.98,"d":"M318.9,470.4 328.9,468.8 329.2,467.0 333.4,467.6 333.3,459.0 355.8,459.4 343.0,470.1 358.5,484.6 344.0,492.1 337.9,485.4 338.3,479.8 334.2,478.1 324.9,480.2 318.9,470.4ZM316.8,479.4 316.3,483.7 294.9,483.3 295.2,458.4 305.1,458.5 308.5,461.8 313.1,468.1 313.6,477.4 316.8,479.4ZM360.5,459.6 394.4,460.4 394.1,463.7 378.3,475.9 374.1,475.3 360.5,459.6Z"},{"b":"PCSB32","a":"PCSB","l":22.51,"d":"M394.4,460.0 360.0,459.4 351.0,448.7 342.9,434.4 394.9,435.6 394.4,460.0ZM358.0,458.0 327.5,458.8 319.3,452.8 320.3,447.3 318.6,446.4 313.6,452.6 304.8,458.4 295.2,458.2 295.8,433.6 335.3,434.5 337.0,444.5 339.1,445.6 345.9,441.8 358.0,458.0Z"},{"b":"PCSB33","a":"PCSB","l":13.14,"d":"M392.0,423.9 389.1,409.8 395.4,409.9 394.9,434.9 342.5,433.8 333.1,418.0 337.7,412.3 345.0,409.8 369.2,425.8 392.0,423.9ZM331.2,432.4 296.2,432.6 296.5,407.5 301.9,409.7 308.9,416.6 309.6,419.6 307.4,423.3 312.1,426.7 310.6,430.5 315.0,429.9 318.7,424.4 321.0,425.6 321.2,429.2 326.4,428.3 331.2,432.4Z"},{"b":"PCSB34","a":"PCSB","l":5.15,"d":"M395.4,409.3 389.3,409.3 389.5,403.6 395.2,401.7 395.4,409.3ZM345.4,383.7 395.9,384.5 395.4,394.2 384.6,397.6 375.1,387.6 364.4,392.6 357.5,393.0 355.0,389.4 351.3,389.7 351.9,387.5 345.4,383.7ZM306.6,375.0 300.7,386.4 296.3,390.5 294.3,382.7 306.6,375.0Z"},{"b":"PCSB35","a":"PCSB","l":20.06,"d":"M396.6,358.5 396.2,383.8 346.1,383.0 347.5,377.7 356.9,381.3 352.8,376.5 344.0,376.7 343.1,371.1 341.2,370.3 341.2,359.1 396.6,358.5ZM299.9,357.2 332.6,357.8 336.9,369.2 335.7,376.1 322.3,377.2 317.8,381.8 314.3,381.1 305.2,372.1 299.9,357.2Z"},{"b":"PCSB36","a":"PCSB","l":23.06,"d":"M396.3,333.2 396.6,358.1 345.1,357.7 341.4,356.5 339.7,347.1 341.1,344.8 336.9,343.4 339.2,332.1 396.3,333.2ZM332.8,351.6 333.0,357.6 299.9,357.0 297.1,350.5 298.1,332.1 325.5,332.1 329.7,334.0 332.3,339.9 327.2,344.3 332.8,351.6Z"},{"b":"PCSB37","a":"PCSB","l":21.2,"d":"M335.0,328.9 334.0,311.1 330.0,306.8 397.1,307.4 396.9,332.7 340.0,331.8 335.0,328.9ZM327.1,322.3 324.4,326.4 324.8,331.7 298.0,331.7 298.5,320.8 309.2,306.4 323.7,306.7 322.1,311.0 317.2,312.4 317.4,319.6 325.3,318.2 327.1,322.3Z"},{"b":"PCSB38","a":"PCSB","l":14.17,"d":"M397.1,307.1 376.9,305.7 377.4,281.9 397.3,282.2 397.1,307.1ZM375.1,304.9 373.9,307.0 334.2,306.6 337.2,304.8 338.4,293.6 343.9,288.3 338.6,285.0 337.6,280.7 369.1,281.9 374.1,286.9 372.2,299.4 375.1,304.9Z"},{"b":"PCSB39","a":"PCSB","l":3.88,"d":"M393.2,274.5 397.3,281.9 374.9,281.5 372.0,278.7 374.6,275.7 378.6,277.6 389.8,276.8 393.2,274.5ZM367.0,276.2 367.0,281.1 337.6,280.7 337.5,272.9 341.9,271.6 347.7,273.1 355.1,270.7 359.5,272.4 362.5,270.5 367.0,276.2Z"},{"b":"PCSB40","a":"PCSB","l":10.89,"d":"M432.9,475.3 413.7,491.8 408.9,493.5 403.9,488.8 394.3,471.5 394.6,460.4 447.6,461.9 434.1,469.1 431.5,472.4 432.9,475.3ZM494.5,461.7 492.8,471.0 490.5,471.9 485.1,467.8 487.6,461.8 494.5,461.7Z"},{"b":"PCSB41","a":"PCSB","l":21.25,"d":"M494.6,436.7 494.5,461.6 489.2,461.6 490.3,453.6 483.7,452.0 479.3,453.4 478.3,450.2 469.1,449.7 468.1,443.9 458.7,455.3 458.1,459.3 456.5,457.3 446.8,460.7 394.8,460.0 395.4,435.6 494.6,436.7Z"},{"b":"PCSB42","a":"PCSB","l":25.25,"d":"M396.0,410.1 495.0,410.9 494.7,436.1 395.5,435.1 396.0,410.1Z"},{"b":"PCSB43","a":"PCSB","l":24.61,"d":"M396.3,395.9 402.1,396.2 401.8,386.7 403.7,384.2 495.5,385.2 495.1,410.5 396.0,409.6 396.3,395.9Z"},{"b":"PCSB44","a":"PCSB","l":25.22,"d":"M396.5,383.8 396.9,358.7 495.5,359.7 495.5,385.0 396.5,383.8Z"},{"b":"PCSB45","a":"PCSB","l":12.99,"d":"M496.0,339.6 495.7,359.0 396.8,358.1 397.2,333.0 402.3,333.1 406.0,354.5 408.1,353.9 407.2,356.6 409.5,357.1 438.8,355.1 443.7,345.9 454.5,335.9 461.8,337.4 461.1,340.7 467.9,344.6 466.3,348.6 467.9,348.9 477.2,349.0 477.4,337.5 479.3,335.6 482.7,337.9 486.6,333.6 494.8,333.8 493.7,338.4 496.0,339.6Z"},{"b":"PCSB46","a":"PCSB","l":1.6,"d":"M402.8,332.8 397.3,332.5 397.3,319.8 402.8,325.1 402.8,332.8ZM491.5,318.9 495.4,320.9 496.9,318.6 497.1,332.0 494.8,333.8 486.6,333.6 489.1,331.2 487.2,330.0 488.1,328.2 492.6,324.4 490.2,320.8 491.5,318.9Z"},{"b":"PCSB47","a":"PCSB","l":2.06,"d":"M496.0,231.8 496.2,250.5 483.0,237.2 468.3,231.7 496.0,231.8Z"},{"b":"PCSB48","a":"PCSB","l":5.08,"d":"M496.2,201.4 495.9,231.2 470.7,231.0 468.9,229.4 471.3,224.2 476.6,224.0 474.0,220.2 474.8,218.0 482.9,213.7 488.8,206.8 487.0,201.4 496.2,201.4Z"},{"b":"PCSB49","a":"PCSB","l":1.47,"d":"M497.3,185.4 496.2,201.1 487.0,201.1 485.1,189.4 497.3,185.4Z"},{"b":"PCSB50","a":"PCSB","l":2.8,"d":"M493.7,156.6 499.7,175.6 484.8,178.9 482.9,168.3 485.3,166.3 482.1,157.5 493.7,156.6ZM494.3,156.6 497.3,156.6 497.1,165.3 496.3,163.2 494.3,156.6Z"},{"b":"PCSB51","a":"PCSB","l":5.76,"d":"M493.4,156.1 484.4,156.2 478.0,158.6 471.6,152.0 468.1,150.8 461.6,153.2 459.9,149.4 487.3,137.5 493.4,156.1ZM497.8,130.5 497.2,156.3 494.2,156.3 486.2,131.9 497.8,130.5Z"},{"b":"PCSB52","a":"PCSB","l":3.97,"d":"M497.8,130.3 485.8,130.7 484.0,121.3 481.6,116.0 479.9,113.2 490.1,109.4 488.9,104.6 494.8,104.6 494.9,108.8 498.0,111.0 497.8,130.3ZM482.4,118.0 472.2,118.4 470.2,116.0 478.3,111.3 482.4,118.0ZM481.7,105.9 474.4,104.3 484.7,104.5 481.7,105.9Z"},{"b":"PCSB53","a":"PCSB","l":0.96,"d":"M494.7,99.1 494.8,104.6 474.4,104.3 473.1,100.6 481.4,102.1 487.3,98.9 494.7,99.1Z"},{"b":"PCSB54","a":"PCSB","l":11.92,"d":"M563.7,437.8 563.2,444.8 559.8,449.0 542.5,438.2 540.4,440.0 552.3,449.1 545.0,450.5 517.8,446.3 528.3,457.3 494.6,469.9 495.2,436.7 563.7,437.8Z"},{"b":"PCSB55","a":"PCSB","l":16.2,"d":"M584.1,418.7 589.0,421.0 592.9,419.3 592.7,438.0 588.2,437.9 587.4,429.1 584.1,418.7ZM583.9,421.0 587.5,437.9 495.2,436.1 495.7,410.9 541.4,411.2 539.9,418.3 546.0,424.4 553.7,429.3 575.2,435.7 583.5,429.7 583.9,421.0Z"},{"b":"PCSB56","a":"PCSB","l":13.59,"d":"M557.1,385.6 551.8,386.3 548.2,406.1 543.1,410.9 495.6,410.2 495.9,385.2 557.1,385.6Z"},{"b":"PCSB57","a":"PCSB","l":16.66,"d":"M565.6,360.9 564.6,376.4 561.7,375.2 562.3,378.1 555.6,377.4 557.2,385.4 496.0,385.0 496.3,359.7 565.6,360.9Z"},{"b":"PCSB58","a":"PCSB","l":17.01,"d":"M496.5,331.6 500.1,333.9 564.4,334.5 568.6,338.7 565.9,342.0 559.5,344.1 558.3,360.1 496.3,359.2 496.4,340.2 493.7,337.5 496.5,331.6Z"},{"b":"PCSB59","a":"PCSB","l":14.45,"d":"M552.2,310.4 552.2,324.2 563.4,334.2 499.4,333.5 497.1,332.0 496.9,318.6 494.0,320.8 490.7,317.0 498.1,309.5 558.6,309.9 552.2,310.4Z"},{"b":"PCSB60","a":"PCSB","l":17.03,"d":"M590.6,307.5 588.6,313.3 584.6,315.4 578.9,306.9 571.3,309.8 498.3,309.3 501.9,305.6 516.5,302.5 530.0,291.5 538.0,298.8 542.8,302.1 553.0,306.9 560.5,306.6 578.7,301.6 590.6,307.5ZM549.4,284.9 586.1,285.3 594.8,283.6 594.2,307.8 577.3,300.8 558.6,306.4 548.2,304.5 538.7,298.7 542.0,292.1 549.4,284.9Z"},{"b":"PCSB61","a":"PCSB","l":11.08,"d":"M594.7,283.1 585.2,284.9 549.3,284.7 545.3,280.0 551.3,273.0 562.0,273.6 559.9,269.7 562.5,265.6 568.6,262.7 568.6,258.7 595.0,259.2 594.7,283.1ZM520.7,257.8 535.0,258.1 533.1,268.5 531.3,269.7 530.0,266.4 525.4,266.5 520.2,263.0 520.7,257.8Z"},{"b":"PCSB62","a":"PCSB","l":16.53,"d":"M496.2,249.6 496.3,231.8 595.4,233.3 595.0,258.7 568.5,258.3 569.0,245.8 565.9,236.9 562.6,233.7 544.7,240.9 535.0,258.1 520.7,257.8 524.9,246.7 528.9,244.4 523.2,240.0 518.9,243.3 514.6,240.8 511.1,243.7 511.5,251.2 504.8,251.5 501.3,247.7 496.2,249.6Z"}];
+(function(){
+  /* ---- peta blok ---- */
+  const svg = document.getElementById('estate');
+  const tip = document.getElementById('tip');
+  const card = svg.closest('.mapcard');
+  const NS = 'http://www.w3.org/2000/svg';
+  let first = null;
+  BLOCKS.forEach(b => {
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', b.d);
+    p.setAttribute('class', b.a);
+    p.dataset.b = b.b; p.dataset.a = b.a; p.dataset.l = b.l;
+    svg.appendChild(p);
+    if (b.b === 'I 01') first = p;
+  });
+  // titik GPS berdenyut di Blok I 01
+  if (first) {
+    const bb = first.getBBox();
+    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'pulse'); g.setAttribute('aria-hidden', 'true');
+    g.innerHTML = '<circle class="ring" cx="' + (bb.x + bb.width/2) + '" cy="' + (bb.y + bb.height/2) + '" r="9"></circle><circle class="dot" cx="' + (bb.x + bb.width/2) + '" cy="' + (bb.y + bb.height/2) + '" r="5"></circle>';
+    g.style.pointerEvents = 'none';
+    svg.appendChild(g);
+  }
+  const afdName = a => a === 'PCSB' ? 'PCSB' : 'Afdeling ' + a;
+  function showTip(p, x, y){
+    const l = Number(p.dataset.l).toLocaleString('id-ID', {minimumFractionDigits:2, maximumFractionDigits:2});
+    tip.innerHTML = '<b>Blok ' + p.dataset.b + '</b>' + afdName(p.dataset.a) + ' · ' + l + ' Ha';
+    const r = card.getBoundingClientRect();
+    let left = x - r.left + 14, top = y - r.top - 60;
+    left = Math.min(left, r.width - 190); top = Math.max(top, 8);
+    tip.style.left = left + 'px'; tip.style.top = top + 'px';
+    tip.classList.add('show');
+  }
+  let hit = null;
+  svg.addEventListener('pointermove', e => {
+    const p = e.target.closest('path');
+    if (!p) { tip.classList.remove('show'); return; }
+    showTip(p, e.clientX, e.clientY);
+  });
+  svg.addEventListener('pointerleave', () => tip.classList.remove('show'));
+  svg.addEventListener('click', e => {
+    const p = e.target.closest('path'); if (!p) return;
+    if (hit) hit.classList.remove('hit');
+    hit = p; p.classList.add('hit');
+    showTip(p, e.clientX, e.clientY);
+  });
+  const count = document.getElementById('mapCount');
+  document.querySelectorAll('.afd button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const a = btn.dataset.afd;
+      document.querySelectorAll('.afd button').forEach(x => x.setAttribute('aria-pressed', String(x === btn)));
+      let n = 0;
+      svg.querySelectorAll('path').forEach(p => {
+        const on = a === 'all' || p.dataset.a === a;
+        p.classList.toggle('dim', !on); if (on) n++;
+      });
+      count.textContent = a === 'all' ? '133 blok · 3 afdeling' : afdName(a) + ' · ' + n + ' blok';
+    });
+  });
+
+  /* ---- menu HP ---- */
+  const mb = document.getElementById('menuBtn'), menu = document.getElementById('menu');
+  mb.addEventListener('click', () => { const o = menu.classList.toggle('open'); mb.setAttribute('aria-expanded', String(o)); });
+  menu.addEventListener('click', e => { if (e.target.closest('a')) { menu.classList.remove('open'); mb.setAttribute('aria-expanded', 'false'); } });
+
+  /* ---- sorot menu sesuai bagian ---- */
+  const links = [...menu.querySelectorAll('a')];
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting) links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + en.target.id));
+    }), {rootMargin: '-45% 0px -50% 0px'});
+    document.querySelectorAll('main section').forEach(s => io.observe(s));
+  }
+
+  /* ---- linimasa karier ---- */
+  const jobs = document.querySelectorAll('.career button');
+  function pickJob(id, scroll){
+    jobs.forEach(j => j.classList.toggle('on', j.dataset.job === id));
+    document.querySelectorAll('.timeline li').forEach(li => li.classList.toggle('on', li.id === id));
+    if (scroll) document.getElementById(id).scrollIntoView({block:'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }
+  jobs.forEach(j => {
+    j.addEventListener('click', () => pickJob(j.dataset.job, true));
+    j.addEventListener('mouseenter', () => pickJob(j.dataset.job, false));
+  });
+  pickJob('j4', false);
+
+  /* ---- filter kemampuan ---- */
+  document.querySelectorAll('.filters button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filters button').forEach(x => x.setAttribute('aria-pressed', String(x === btn)));
+      document.querySelectorAll('.skill').forEach(s => { s.hidden = !(btn.dataset.f === 'all' || s.dataset.cat === btn.dataset.f); });
+    });
+  });
+
+  /* ---- tab aplikasi ---- */
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function select(t, focus){
+    tabs.forEach(x => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on));
+      x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t, false));
+    t.addEventListener('keydown', e => {
+      const k = e.key; let n = null;
+      if (k === 'ArrowDown' || k === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      if (k === 'ArrowUp' || k === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (k === 'Home') n = tabs[0];
+      if (k === 'End') n = tabs[tabs.length - 1];
+      if (n) { e.preventDefault(); select(n, true); }
+    });
+  });
+
+  /* ---- perbesar screenshot ---- */
+  const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
+  document.querySelectorAll('[data-zoom]').forEach(d => d.addEventListener('click', () => {
+    lbImg.src = d.dataset.zoom; lbImg.alt = d.querySelector('img').alt; lbCap.textContent = d.dataset.cap;
+    if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
+  }));
+  document.getElementById('lbClose').addEventListener('click', () => lb.close());
+  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+
+  /* ---- salin kontak ---- */
+  document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Tersalin'; b.classList.add('ok'); }
+    catch (err) { b.textContent = 'Salin manual'; }
+    setTimeout(() => { b.textContent = 'Salin'; b.classList.remove('ok'); }, 2000);
+  }));
+})();
+</script>
+</body>
+</html>
