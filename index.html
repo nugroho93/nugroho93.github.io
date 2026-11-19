@@ -29,38 +29,38 @@ body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:
 img{max-width:100%}
 a{color:var(--navy)}
 :focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:6px}
-h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05;font-weight:700}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05;font-weight:600}
 .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
 button{font:inherit;cursor:pointer}
 
 /* ---------- nav ---------- */
 .nav{position:sticky;top:0;z-index:50;background:rgba(7,27,61,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
-.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:.6px}
-.brand i{width:30px;height:30px;border-radius:8px;background:var(--cyan);color:var(--night);display:grid;place-items:center;font-style:normal;font-size:16px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.2px}
+.brand i{width:28px;height:28px;border-radius:6px;background:var(--cyan);color:var(--night);display:grid;place-items:center;font-style:normal;font-size:16px}
 .menu{display:flex;gap:4px;list-style:none;margin:0;padding:0}
-.menu a{display:block;color:#C7D6EC;text-decoration:none;font-weight:500;font-size:15px;padding:8px 12px;border-radius:999px}
+.menu a{display:block;color:#C7D6EC;text-decoration:none;font-weight:500;font-size:15px;padding:8px 12px;border-radius:8px;transition:color .15s,background-color .15s}
 .menu a:hover{color:#fff}
-.menu a.on{background:rgba(25,181,234,.16);color:#fff}
+.menu a.on{background:rgba(255,255,255,.08);color:#fff}
 .menu-btn{display:none;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;width:44px;height:44px;align-items:center;justify-content:center}
 
 /* ---------- hero ---------- */
-.hero{background:radial-gradient(1200px 500px at 85% 20%,#0E3A7E 0%,var(--night) 60%);color:#fff;position:relative;overflow:hidden}
+.hero{background:var(--night);color:#fff;position:relative;overflow:hidden}
 .hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:center;padding-top:56px;padding-bottom:64px}
 .who{display:flex;align-items:center;gap:18px}
-.hex{position:relative;width:118px;height:134px;flex:none;filter:drop-shadow(0 0 12px rgba(25,181,234,.55))}
+.hex{position:relative;width:118px;height:134px;flex:none}
 .hex .rim{position:absolute;inset:0;background:#fff;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
 .hex .fill{position:absolute;left:4px;top:4px;width:110px;height:126px;background:var(--cyan);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
 .hex img{position:absolute;left:4px;top:-10px;width:110px;height:140px;object-fit:cover;object-position:center top;clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%)}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:14px;letter-spacing:1.8px;text-transform:uppercase}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:500;font-size:15px}
 .eyebrow::before{content:"";width:22px;height:2px;background:var(--palm)}
-.hero h1{font-size:clamp(52px,7vw,84px);letter-spacing:.5px;margin-top:22px;text-transform:uppercase}
-.hero h1 span{color:var(--cyan)}
+.hero h1{font-size:clamp(52px,7vw,84px);letter-spacing:-.5px;margin-top:24px}
+.hero h1 span{color:#9FB6D6}
 .role{font-size:20px;color:#CFDDF1;margin:10px 0 0}
 .lede{font-size:18px;color:#E7EEF8;max-width:54ch;margin:18px 0 0}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:2px solid transparent;transition:transform .15s,background .15s}
-.btn:hover{transform:translateY(-1px)}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 20px;border-radius:10px;font-weight:500;font-size:16px;text-decoration:none;border:1px solid transparent;transition:background-color .15s,border-color .15s}
+.btn:active{transform:scale(.98)}
 .btn svg{width:18px;height:18px}
 .btn-cyan{background:var(--cyan);color:var(--night)}
 .btn-cyan:hover{background:#4CC8F2}
@@ -82,10 +82,10 @@ button{font:inherit;cursor:pointer}
 .pulse circle.ring{fill:none;stroke:#fff;stroke-width:2;animation:ring 2.4s ease-out infinite;transform-origin:center;transform-box:fill-box}
 @keyframes ring{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(2.6)}}
 .afd{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.afd button{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);color:#E7EEF8;border-radius:999px;padding:6px 14px;min-height:36px;font-size:14px;font-weight:500}
+.afd button{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);color:#E7EEF8;border-radius:8px;padding:6px 12px;min-height:36px;font-size:14px;font-weight:500;transition:background-color .15s,color .15s}
 .afd button[aria-pressed="true"]{background:#fff;color:var(--night);border-color:#fff}
 .afd i{width:10px;height:10px;border-radius:3px;display:inline-block}
-.tip{position:absolute;pointer-events:none;background:#fff;color:var(--ink);border-radius:10px;padding:8px 12px;font-size:14px;line-height:1.35;box-shadow:0 10px 24px rgba(0,0,0,.35);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;white-space:nowrap}
+.tip{position:absolute;pointer-events:none;background:#fff;color:var(--ink);border-radius:8px;padding:8px 12px;font-size:14px;line-height:1.35;box-shadow:0 10px 24px rgba(0,0,0,.35);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;white-space:nowrap}
 .tip.show{opacity:1;transform:none}
 .tip b{font-family:var(--display);font-size:18px;display:block}
 .maphint{color:#9FB6D6;font-size:13px;margin:8px 0 0}
@@ -95,14 +95,16 @@ button{font:inherit;cursor:pointer}
 .facts .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
 .fact{padding:22px 20px;border-left:1px solid var(--line)}
 .fact:first-child{border-left:0}
-.fact b{display:block;font-family:var(--display);font-size:38px;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.fact b{display:block;font-family:var(--display);font-size:40px;font-weight:600;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums;margin-bottom:6px}
 .fact span{color:var(--muted);font-size:15px}
 
 /* ---------- sections ---------- */
 section{padding:76px 0}
-.sec-head{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;align-items:end;margin-bottom:30px}
-.sec-head .num{grid-row:span 2;font-family:var(--display);font-size:64px;line-height:.8;color:var(--cyan);font-weight:700}
-.sec-head h2{font-size:42px;color:var(--navy)}
+.sec-head{display:grid;gap:8px;margin-bottom:32px}
+.code{display:inline-block;justify-self:start;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:12px;font-weight:500;line-height:1;letter-spacing:0;font-variant-numeric:tabular-nums;padding:4px 6px;border:1px solid currentColor;border-radius:4px;opacity:.85}
+.sec-head .code{color:var(--muted)}
+.port .sec-head .code{color:#9FB6D6}
+.sec-head h2{font-size:44px;color:var(--navy)}
 .sec-head p{margin:0;color:var(--muted);max-width:62ch}
 
 .profile{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:start}
@@ -112,35 +114,35 @@ section{padding:76px 0}
 .quote small{display:block;margin-top:14px;color:#BFD3EE;font-size:15px}
 
 /* career bar + timeline */
-.career{display:grid;grid-template-columns:repeat(13,1fr);gap:3px;margin-bottom:8px}
-.career button{height:40px;border:0;border-radius:6px;color:#fff;font-weight:600;font-size:13px;padding:0 6px;text-align:left;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:filter .15s,transform .15s}
-.career button:hover,.career button.on{filter:brightness(1.12);transform:translateY(-2px)}
+.career{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:3px;margin-bottom:8px}
+.career button{height:40px;border:0;border-radius:6px;color:#fff;font-weight:600;font-size:13px;padding:0 6px;text-align:left;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:filter .15s}
+.career button:hover,.career button.on{filter:brightness(1.15)}
 .c1{background:#5E7FB0}.c2{background:#2F67B4}.c3{background:var(--navy)}.c4{background:var(--cyan);color:var(--night)!important}
-.years{display:grid;grid-template-columns:repeat(13,1fr);font-size:12px;color:var(--muted);margin-bottom:28px;font-variant-numeric:tabular-nums}
+.years{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));font-size:12px;color:var(--muted);margin-bottom:28px;font-variant-numeric:tabular-nums}
 .timeline{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.timeline li{display:grid;grid-template-columns:150px 1fr;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;transition:border-color .2s,box-shadow .2s}
-.timeline li.on{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(25,181,234,.18)}
+.timeline li{display:grid;grid-template-columns:150px 1fr;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;transition:border-color .2s}
+.timeline li.on{border-color:var(--navy)}
 .when{font-family:var(--display);font-size:22px;color:var(--navy);font-weight:600;font-variant-numeric:tabular-nums}
 .when small{display:block;font-family:var(--body);font-size:13px;color:var(--muted);font-weight:500}
-.timeline h3{font-size:25px;color:var(--ink)}
+.timeline h3{font-size:24px;color:var(--ink)}
 .timeline p{margin:4px 0 0;color:var(--muted)}
-.badge{display:inline-block;background:var(--cyan);color:var(--night);font-family:var(--body);font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;vertical-align:middle;margin-left:8px}
+.badge{display:inline-block;background:#E2F4FC;color:var(--navy);font-family:var(--body);font-size:13px;font-weight:500;padding:2px 8px;border-radius:6px;vertical-align:middle;margin-left:8px}
 
 /* skills */
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.filters button{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;min-height:42px;font-weight:600;font-size:15px;color:var(--ink)}
+.filters button{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 16px;min-height:40px;font-weight:500;font-size:15px;color:var(--ink);transition:background-color .15s,color .15s,border-color .15s}
 .filters button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
 .skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
-.skill{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;transition:transform .2s,box-shadow .2s,opacity .2s}
-.skill:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(11,60,131,.1)}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;transition:border-color .15s}
+.skill:hover{border-color:#B4C4DA}
 .skill[hidden]{display:none}
-.skill .ico{width:42px;height:42px;border-radius:11px;background:#E2F4FC;display:grid;place-items:center;margin-bottom:12px}
-.skill .ico svg{width:22px;height:22px;stroke:var(--navy)}
+.skill .ico{width:40px;height:40px;border-radius:10px;background:#E2F4FC;display:grid;place-items:center;margin-bottom:12px}
+.skill .ico svg{width:20px;height:20px;stroke:var(--navy);stroke-width:1.75}
 .skill h3{font-size:24px;color:var(--navy)}
 .skill p{margin:6px 0 0;font-size:16px;color:var(--ink)}
-.skill .tag{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.skill .tag{margin-top:16px;color:var(--muted)}
 .traits{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.traits span{border:1px dashed #9DB3D2;border-radius:999px;padding:6px 14px;font-size:15px;color:var(--navy);font-weight:500}
+.traits span{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;font-size:15px;color:var(--navy);font-weight:500}
 
 /* portfolio */
 .port{background:var(--night);color:#fff}
@@ -151,7 +153,7 @@ section{padding:76px 0}
 .tab{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 14px;color:#DDE7F5;min-height:64px;transition:background .15s,border-color .15s}
 .tab:hover{background:rgba(255,255,255,.08)}
 .tab[aria-selected="true"]{background:#fff;color:var(--night);border-color:#fff}
-.tab .ti{width:44px;height:44px;border-radius:11px;background:rgba(25,181,234,.15);display:grid;place-items:center}
+.tab .ti{width:44px;height:44px;border-radius:10px;background:rgba(25,181,234,.15);display:grid;place-items:center}
 .tab[aria-selected="true"] .ti{background:var(--night)}
 .tab .ti svg{width:22px;height:22px;stroke:var(--cyan)}
 .tab b{display:block;font-family:var(--display);font-size:20px;line-height:1.1}
@@ -164,21 +166,21 @@ section{padding:76px 0}
 .device.phone img{display:block;width:100%;height:auto;aspect-ratio:390/760;object-fit:cover;object-position:top}
 .device.laptop{width:100%;border:8px solid #020C1F;border-bottom-width:14px;border-radius:14px 14px 6px 6px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,.45)}
 .device.laptop img{display:block;width:100%;height:auto}
-.zoom{position:absolute;right:10px;bottom:10px;background:rgba(7,27,61,.85);color:#fff;border-radius:999px;font-size:13px;font-weight:600;padding:4px 10px}
-.info .prod{font-size:13px;font-weight:700;letter-spacing:1.6px;color:var(--cyan);text-transform:uppercase}
+.zoom{position:absolute;right:8px;bottom:8px;background:rgba(7,27,61,.85);color:#fff;border-radius:6px;font-size:13px;font-weight:500;padding:4px 8px}
+.info .prod,.extra .prod{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--cyan)}
 .info h3{font-size:40px;margin-top:6px}
 .info p{color:#DCE7F6;margin:10px 0 0;max-width:56ch}
 .info ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
 .info li{display:grid;grid-template-columns:22px 1fr;gap:8px;color:#E7EEF8;font-size:16px}
 .info li svg{width:18px;height:18px;stroke:var(--cyan);margin-top:4px}
-.status{display:inline-block;font-size:13px;font-weight:700;padding:3px 12px;border-radius:999px;margin-left:10px;vertical-align:middle;letter-spacing:0;text-transform:none}
-.s-live{background:#22B87C;color:#04261A}
-.s-dev{background:var(--cyan);color:var(--night)}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#DCE7F6}
+.status::before{content:"";width:8px;height:8px;border-radius:50%}
+.s-live::before{background:#22B87C}
+.s-dev::before{background:var(--cyan)}
 .wide .info{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;align-items:start}
 .wide .info ul{margin-top:0}
 .extras{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
 .extra{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 22px}
-.extra .prod{font-size:12px;font-weight:700;letter-spacing:1.4px;color:var(--cyan);text-transform:uppercase}
 .extra h3{font-size:24px;margin-top:6px}
 .extra p{margin:6px 0 0;color:#DCE7F6;font-size:16px}
 .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;color:#B9CBE5;font-size:14px}
@@ -190,10 +192,12 @@ dialog.lb{border:0;padding:0;background:transparent;max-width:min(1200px,94vw);m
 dialog.lb::backdrop{background:rgba(2,10,25,.85)}
 dialog.lb img{display:block;max-width:100%;max-height:86vh;border-radius:12px;margin:0 auto}
 dialog.lb .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#fff;margin-bottom:10px}
-dialog.lb button{background:#fff;border:0;border-radius:999px;min-height:40px;padding:0 16px;font-weight:700;color:var(--night)}
+dialog.lb button{background:#fff;border:0;border-radius:8px;min-height:40px;padding:0 16px;font-weight:500;color:var(--night)}
 
 /* contact */
-.contact-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:start}
+.contact-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:start}
+.crow > div{min-width:0}
+.crow a,.crow span.v{overflow-wrap:break-word}
 .edu{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .edu li{display:grid;grid-template-columns:110px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .edu .yr{font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -207,14 +211,14 @@ dialog.lb button{background:#fff;border:0;border-radius:999px;min-height:40px;pa
 .crow small{display:block;color:#A9C0E0;font-size:13px}
 .crow a,.crow span.v{color:#fff;font-weight:600;font-size:18px;text-decoration:none}
 .crow a:hover{text-decoration:underline}
-.copy{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;min-height:38px;padding:0 14px;font-size:14px;font-weight:600}
+.copy{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;min-height:36px;padding:0 12px;font-size:14px;font-weight:500;transition:background-color .15s}
 .copy.ok{background:#22B87C;border-color:#22B87C;color:#04261A}
 footer{background:var(--night);color:#9FB6D6;font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:22px;padding-bottom:22px}
 
 /* ---------- responsive ---------- */
 @media (max-width:960px){
-  .hero .wrap,.profile,.contact-wrap{grid-template-columns:1fr}
+  .hero .wrap,.profile,.contact-wrap{grid-template-columns:minmax(0,1fr)}
   .showcase{grid-template-columns:1fr}
   .tabs{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
   .wide .info{grid-template-columns:1fr}
@@ -230,11 +234,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   .panel{grid-template-columns:1fr;justify-items:center;min-height:0}
   .panel .info{justify-self:stretch}
   .extras{grid-template-columns:1fr}
+  .contact{padding:24px}
+  .crow a,.crow span.v{font-size:16px}
   .timeline li{grid-template-columns:1fr;gap:6px}
   .career button{font-size:0}
   .years span:nth-child(odd){visibility:hidden}
   section{padding:56px 0}
-  .sec-head .num{font-size:48px}
   .sec-head h2{font-size:34px}
   .info h3{font-size:32px}
 }
@@ -248,7 +253,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <nav class="nav" aria-label="Navigasi utama">
   <div class="wrap">
-    <a class="brand" href="#top"><i>W</i>WAHYU NUGROHO</a>
+    <a class="brand" href="#top"><i>W</i>Wahyu Nugroho</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="Buka menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
     </button>
@@ -309,14 +314,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     <div class="fact"><b>2014</b><span>mulai berkarier di perkebunan sawit</span></div>
     <div class="fact"><b>3</b><span>perusahaan perkebunan</span></div>
     <div class="fact"><b>5</b><span>aplikasi kebun yang saya bangun</span></div>
-    <div class="fact"><b>SAP · PMS · JVE</b><span>sistem perkebunan yang dikuasai</span></div>
+    <div class="fact"><b>3</b><span>sistem perkebunan: SAP, PMS, JVE</span></div>
   </div>
 </div>
 
 <main>
 <section id="profil">
   <div class="wrap">
-    <div class="sec-head"><span class="num">01</span><h2>Profil</h2><p>Dari meja administrasi ke lapangan, lalu ke aplikasi.</p></div>
+    <div class="sec-head"><span class="code">01</span><h2>Profil</h2><p>Dari meja administrasi ke lapangan, lalu ke aplikasi.</p></div>
     <div class="profile">
       <div>
         <p>Saya memulai karier dari administrasi: payroll, administrasi estate, lalu Kasub Agronomi. Dari situ saya terbiasa membaca kebun lewat angka, mulai dari budget, realisasi, rotasi, sampai dosis pupuk per blok.</p>
@@ -333,7 +338,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <section id="pengalaman" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><span class="num">02</span><h2>Pengalaman Kerja</h2><p>Ketuk bilah tahun untuk menyorot posisinya.</p></div>
+    <div class="sec-head"><span class="code">02</span><h2>Pengalaman Kerja</h2><p>Ketuk bilah tahun untuk menyorot posisinya.</p></div>
     <div class="career" role="group" aria-label="Linimasa karier 2014 sampai sekarang">
       <button type="button" class="c1" style="grid-column:1 / span 3" data-job="j1">Best Agro</button>
       <button type="button" class="c2" style="grid-column:4 / span 3" data-job="j2">Sawit Mas</button>
@@ -364,7 +369,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <section id="kemampuan" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><span class="num">03</span><h2>Kemampuan</h2><p>Pilih kelompok untuk menyaring.</p></div>
+    <div class="sec-head"><span class="code">03</span><h2>Kemampuan</h2><p>Pilih kelompok untuk menyaring.</p></div>
     <div class="filters" role="group" aria-label="Saring kemampuan">
       <button type="button" data-f="all" aria-pressed="true">Semua</button>
       <button type="button" data-f="lapangan" aria-pressed="false">Lapangan &amp; agronomi</button>
@@ -374,35 +379,35 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     <div class="skills" id="skills">
       <article class="skill" data-cat="lapangan">
         <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11M12 11C12 6 8 3 3 3c0 5 4 8 9 8zM12 11c0-4 3-7 8-7 0 4-3 7-8 7z"></path></svg></div>
-        <h3>Agronomi</h3><p>Siklus LC, TBM, TM. Program pemupukan, SPH, sensus produksi, dan rotasi perawatan: semprot, pruning, pupuk.</p><span class="tag">Lapangan</span>
+        <h3>Agronomi</h3><p>Siklus LC, TBM, TM. Program pemupukan, SPH, sensus produksi, dan rotasi perawatan: semprot, pruning, pupuk.</p><span class="code tag">Lapangan</span>
       </article>
       <article class="skill" data-cat="lapangan">
         <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"></path><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></div>
-        <h3>Quality Control</h3><p>Tiga tahun di QC: menyusun standar kerja, inspeksi lapangan, dan menindaklanjuti temuan kualitas.</p><span class="tag">Lapangan</span>
+        <h3>Quality Control</h3><p>Tiga tahun di QC: menyusun standar kerja, inspeksi lapangan, dan menindaklanjuti temuan kualitas.</p><span class="code tag">Lapangan</span>
       </article>
       <article class="skill" data-cat="lapangan">
         <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div>
-        <h3>Perencanaan &amp; anggaran</h3><p>Menyusun budget tahunan, membaginya per bulan dan per divisi, lalu mengendalikan realisasinya.</p><span class="tag">Lapangan</span>
+        <h3>Perencanaan &amp; anggaran</h3><p>Menyusun budget tahunan, membaginya per bulan dan per divisi, lalu mengendalikan realisasinya.</p><span class="code tag">Lapangan</span>
       </article>
       <article class="skill" data-cat="data">
         <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18M9 20V9"></path></svg></div>
-        <h3>Sistem perkebunan</h3><p>SAP (PT. Eagle High Plantation), PMS dan JVE (PT. Best Agro). Excel tingkat lanjut dan VBA/Macro, MYOB, FoxPro.</p><span class="tag">Data &amp; sistem</span>
+        <h3>Sistem perkebunan</h3><p>SAP (PT. Eagle High Plantation), PMS dan JVE (PT. Best Agro). Excel tingkat lanjut dan VBA/Macro, MYOB, FoxPro.</p><span class="code tag">Data &amp; sistem</span>
       </article>
       <article class="skill" data-cat="data">
         <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg></div>
-        <h3>Analisa data</h3><p>Audit pemupukan per blok: realisasi gudang dibanding lapangan, kepatuhan dosis, rekap per divisi, laporan semester.</p><span class="tag">Data &amp; sistem</span>
+        <h3>Analisa data</h3><p>Audit pemupukan per blok: realisasi gudang dibanding lapangan, kepatuhan dosis, rekap per divisi, laporan semester.</p><span class="code tag">Data &amp; sistem</span>
       </article>
       <article class="skill" data-cat="data">
         <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"></path><path d="M9 4v14M15 6v14"></path></svg></div>
-        <h3>GIS &amp; IT</h3><p>Pemetaan blok dengan ArcGIS/ArcMap, jaringan LAN dan Mikrotik, Python dan HTML/JavaScript untuk otomasi laporan.</p><span class="tag">Data &amp; sistem</span>
+        <h3>GIS &amp; IT</h3><p>Pemetaan blok dengan ArcGIS/ArcMap, jaringan LAN dan Mikrotik, Python dan HTML/JavaScript untuk otomasi laporan.</p><span class="code tag">Data &amp; sistem</span>
       </article>
       <article class="skill" data-cat="digital">
         <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M11 18h2"></path></svg></div>
-        <h3>Digitalisasi kebun</h3><p>Merancang dan membangun aplikasi estate sendiri: BKM, peta blok offline, sensus BBC, TPH panen, dan absensi wajah.</p><span class="tag">Digital &amp; kreatif</span>
+        <h3>Digitalisasi kebun</h3><p>Merancang dan membangun aplikasi estate sendiri: BKM, peta blok offline, sensus BBC, TPH panen, dan absensi wajah.</p><span class="code tag">Digital &amp; kreatif</span>
       </article>
       <article class="skill" data-cat="digital">
         <div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"></rect><path d="M16 10l6-3v10l-6-3z"></path></svg></div>
-        <h3>Editing Video</h3><p>Menyunting video tutorial aplikasi kebun, video CSR, dan konten edukasi sawit dengan CapCut dan Camtasia, termasuk video berbasis AI.</p><span class="tag">Digital &amp; kreatif</span>
+        <h3>Editing Video</h3><p>Menyunting video tutorial aplikasi kebun, video CSR, dan konten edukasi sawit dengan CapCut dan Camtasia, termasuk video berbasis AI.</p><span class="code tag">Digital &amp; kreatif</span>
       </article>
     </div>
     <div class="traits" aria-label="Karakter kerja">
@@ -413,7 +418,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <section id="portofolio" class="port">
   <div class="wrap">
-    <div class="sec-head"><span class="num">04</span><h2>Portofolio Digitalisasi Kebun</h2><p>Lima aplikasi di bawah nama ESTACH (Smart Plantation Solution), dirancang dari alur kerja nyata di Kelampai Estate. Pilih aplikasi, lalu ketuk gambarnya untuk memperbesar.</p></div>
+    <div class="sec-head"><span class="code">04</span><h2>Portofolio Digitalisasi Kebun</h2><p>Lima aplikasi di bawah nama ESTACH (Smart Plantation Solution), dirancang dari alur kerja nyata di Kelampai Estate. Pilih aplikasi, lalu ketuk gambarnya untuk memperbesar.</p></div>
 
     <div class="showcase">
       <div class="tabs" role="tablist" aria-label="Pilih aplikasi" aria-orientation="vertical">
@@ -447,7 +452,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
           </button>
           <div class="info">
             <div>
-              <div class="prod">ESTACH WORK <span class="status s-live">Dipakai</span></div>
+              <div class="prod"><span class="code">ESTACH WORK</span> <span class="status s-live">Dipakai</span></div>
               <h3>BKM Digital</h3>
               <p>Program input Buku Kerja Mandor di kantor kebun. Beranda langsung menunjukkan hari kerja yang belum diinput, jadi tidak ada BKM yang tertinggal.</p>
             </div>
@@ -464,7 +469,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
             <img src="app-peta.jpg" alt="Peta Kebun: peta blok Kelampai Estate per afdeling dengan kompas dan alat ukur" width="540" height="1169"><span class="zoom">Perbesar</span>
           </button>
           <div class="info">
-            <div class="prod">ESTACH MAP <span class="status s-dev">Pengembangan</span></div>
+            <div class="prod"><span class="code">ESTACH MAP</span> <span class="status s-dev">Pengembangan</span></div>
             <h3>Peta Kebun</h3>
             <p>Peta estate ala Avenza di HP, bisa dipakai tanpa sinyal. Batas blok diambil dari peta blok tanam hasil ArcMap.</p>
             <ul>
@@ -480,7 +485,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
             <img src="app-bbc.jpg" alt="Sensus BBC: pilih divisi dan blok, lalu foto empat sisi pokok" width="540" height="1169"><span class="zoom">Perbesar</span>
           </button>
           <div class="info">
-            <div class="prod">ESTACH VISION <span class="status s-dev">Pengembangan</span></div>
+            <div class="prod"><span class="code">ESTACH VISION</span> <span class="status s-dev">Pengembangan</span></div>
             <h3>Sensus BBC</h3>
             <p>Sensus buah berbasis kamera. Mandor memotret pokok, AI menandai tandan, lalu mandor memeriksa hasilnya.</p>
             <ul>
@@ -496,7 +501,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
             <img src="app-tph.jpg" alt="TPH Panen: peta TPH, tombol scan QR TPH dan buat SPB angkut ke pabrik" width="540" height="1169"><span class="zoom">Perbesar</span>
           </button>
           <div class="info">
-            <div class="prod">ESTACH HARVEST <span class="status s-dev">Pengembangan</span></div>
+            <div class="prod"><span class="code">ESTACH HARVEST</span> <span class="status s-dev">Pengembangan</span></div>
             <h3>TPH Panen</h3>
             <p>Setiap TPH punya alamat GPS dan QR unik. Krani memindai QR, mencatat buah per pemanen, lalu membuat SPB ke pabrik.</p>
             <ul>
@@ -512,7 +517,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
             <img src="app-absen.jpg" alt="ESTACH Absen: absensi apel pagi per kemandoran dengan kamera" width="540" height="1169"><span class="zoom">Perbesar</span>
           </button>
           <div class="info">
-            <div class="prod">ESTACH ABSEN <span class="status s-dev">Pengembangan</span></div>
+            <div class="prod"><span class="code">ESTACH ABSEN</span> <span class="status s-dev">Pengembangan</span></div>
             <h3>Absen Apel Pagi</h3>
             <p>Mandor mengabsen anggota kemandoran saat apel pagi dengan satu HP, memakai pengenal wajah AI yang jalan tanpa internet.</p>
             <ul>
@@ -527,12 +532,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
     <div class="extras">
       <article class="extra">
-        <div class="prod">Excel · VBA · Python <span class="status s-live">Dipakai</span></div>
+        <div class="prod"><span class="code">Excel · VBA · Python</span> <span class="status s-live">Dipakai</span></div>
         <h3>Monitoring &amp; Audit Pemupukan</h3>
         <p>Bandingkan pengeluaran gudang dengan realisasi lapangan, cek kepatuhan dosis per blok (±5%), dan rekap per divisi.</p>
       </article>
       <article class="extra">
-        <div class="prod">Pelatihan <span class="status s-dev">Pengembangan</span></div>
+        <div class="prod"><span class="code">Pelatihan</span> <span class="status s-dev">Pengembangan</span></div>
         <h3>BBC Mission</h3>
         <p>Game pelatihan interaktif untuk mandor tentang cara melakukan sensus buah (BBC) dengan benar.</p>
       </article>
@@ -546,7 +551,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <section id="kontak">
   <div class="wrap">
-    <div class="sec-head"><span class="num">05</span><h2>Pendidikan &amp; Kontak</h2><p>Terbuka untuk peluang di agronomi, quality control, dan digitalisasi perkebunan.</p></div>
+    <div class="sec-head"><span class="code">05</span><h2>Pendidikan &amp; Kontak</h2><p>Terbuka untuk peluang di agronomi, quality control, dan digitalisasi perkebunan.</p></div>
     <div class="contact-wrap">
       <ul class="edu">
         <li><span class="yr">2010 – 2013</span><span><b>SMK N 1 Tepus</b><br>Jurusan Administrasi Perkantoran</span></li>
@@ -563,7 +568,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         </div>
         <div class="crow">
           <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></span>
-          <div><small>Email</small><a href="mailto:wahyunugroho93@ymail.com">wahyunugroho93@ymail.com</a></div>
+          <div><small>Email</small><a href="mailto:wahyunugroho93@ymail.com">wahyunugroho93<wbr>@ymail.com</a></div>
           <button type="button" class="copy" data-copy="wahyunugroho93@ymail.com">Salin</button>
         </div>
         <div class="crow">
