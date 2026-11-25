@@ -182,7 +182,7 @@ pre.struk{background:#fff;color:#111;border-radius:2px;padding:14px 12px;font:13
   <input type="file" id="fRestore" accept=".json,application/json" class="hid">
   <h3>Lainnya</h3>
   <div class="row wrap" style="margin-top:10px"><button class="btn" data-act="contoh">Isi data contoh</button><button class="btn mer" data-act="reset">Hapus semua data</button></div>
-  <p class="muted" style="margin-top:28px">Kasir Kelontong versi 1.1, dibuat oleh Wahyu Nugroho. Bantuan lewat WA 0822-5269-3421.</p>
+  <p class="muted" style="margin-top:28px">Kasir Kelontong versi 1.1.1, dibuat oleh Wahyu Nugroho. Bantuan lewat WA 0822-5269-3421.</p>
  </section>
 </main>
 <div class="strip" id="cartbar"><div><div class="sp" data-act="cart" style="cursor:pointer"><div class="cnt" id="cbJml"></div><div class="tot num" id="cbTot"></div></div><button class="btn" data-act="cart">Lihat</button><button class="btn pri" data-act="bayar">Bayar</button></div></div>
@@ -455,7 +455,10 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(
 window.kasirBack=()=>{if(!$('#scanner').classList.contains('hid')){stopScan();return true}if(!$('#m2').classList.contains('hid')){$('#askNo').click();return true}if(!$('#m1').classList.contains('hid')){tutup();return true}if(viewAktif()!=='kasir'){go('kasir');return true}return false};
 /* ---------- mulai ---------- */
 muat().then(()=>{$('#hNama').textContent=S.set.nama;$('#hTgl').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});go('kasir')});
-if(!AND&&'serviceWorker' in navigator&&/^https?:/.test(location.protocol)){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+if(!AND&&'serviceWorker' in navigator&&/^https?:/.test(location.protocol)){
+ const adaSW=!!navigator.serviceWorker.controller;let muatUlang=false;
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!adaSW||muatUlang)return;muatUlang=true;toast('Memasang versi baru…');setTimeout(()=>location.reload(),600)});
+ navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{const cek=()=>{try{reg.update()}catch(e){}};document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')cek()});setInterval(cek,30*60*1000)}).catch(()=>{})}
 }
 </script>
 </body>
