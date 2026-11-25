@@ -132,6 +132,8 @@ pre.struk{background:#fff;color:#111;border-radius:2px;padding:14px 12px;font:13
 #scanner video{flex:1;width:100%;object-fit:cover}
 #scanner .bar2{padding:14px;display:flex;gap:8px;background:#000;color:#fff;align-items:center}
 #scanner .aim{position:absolute;left:10%;right:10%;top:38%;height:22%;border:3px solid #fff;border-radius:12px;pointer-events:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.35)}
+#cetakArea{display:none}
+@media print{body>*:not(#cetakArea){display:none!important}body{background:#fff}#cetakArea{display:block!important;color:#000}#cetakArea pre{margin:0;font:12px/1.3 ui-monospace,Menlo,Consolas,monospace;white-space:pre}@page{margin:4mm}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -166,13 +168,21 @@ pre.struk{background:#fff;color:#111;border-radius:2px;padding:14px 12px;font:13
   <label for="sHp">Nomor HP atau WA toko</label><input id="sHp" inputmode="tel">
   <label for="sCat">Pesan di bawah struk</label><input id="sCat">
   <button class="btn pri full" data-act="simpanSet">Simpan data toko</button>
+  <h3>Printer struk</h3>
+  <div class="list" style="margin-top:10px"><div class="kv"><span>Status</span><b id="prStatus">Tidak dipakai</b></div></div>
+  <label for="prMetode">Cara mencetak</label>
+  <select id="prMetode"><option value="">Tidak pakai printer</option><option value="bt">Printer Bluetooth, langsung dari aplikasi</option><option value="rawbt">Printer Bluetooth lewat aplikasi RawBT</option><option value="sistem">Printer lain, lewat dialog cetak</option></select>
+  <div id="prBtBox" class="hid"><button class="btn pri full" data-act="cariPrinter">Cari printer Bluetooth</button><p class="muted" id="prBtInfo" style="margin:8px 2px 0">Nyalakan printer dan Bluetooth HP, lalu pilih printer dari daftar yang muncul.</p></div>
+  <p class="muted hid" id="prRawInfo" style="margin:8px 2px 0">Pasang aplikasi RawBT dari Play Store, lalu pilih printer di dalam RawBT satu kali. Setelah itu struk dari Kasir dikirim lewat RawBT. Cara ini cocok untuk printer yang tidak terdeteksi oleh pilihan Bluetooth langsung.</p>
+  <div class="duo"><div><label for="prKertas">Lebar kertas</label><select id="prKertas"><option value="58">58 mm</option><option value="80">80 mm</option></select></div><div><label for="prAuto">Setelah transaksi</label><select id="prAuto"><option value="">Cetak kalau diminta</option><option value="1">Langsung cetak</option></select></div></div>
+  <button class="btn full" data-act="tesCetak">Tes cetak</button>
   <h3>Cadangan data</h3>
   <p class="muted" id="infoBackup" style="margin:4px 2px 10px"></p>
   <div class="row wrap"><button class="btn hij" data-act="backup">Unduh cadangan</button><button class="btn" data-act="salinBackup">Salin cadangan</button><button class="btn" data-act="restore">Pulihkan dari file</button></div>
   <input type="file" id="fRestore" accept=".json,application/json" class="hid">
   <h3>Lainnya</h3>
   <div class="row wrap" style="margin-top:10px"><button class="btn" data-act="contoh">Isi data contoh</button><button class="btn mer" data-act="reset">Hapus semua data</button></div>
-  <p class="muted" style="margin-top:28px">Kasir Kelontong versi 1.0, dibuat oleh Wahyu Nugroho. Bantuan lewat WA 0822-5269-3421.</p>
+  <p class="muted" style="margin-top:28px">Kasir Kelontong versi 1.1, dibuat oleh Wahyu Nugroho. Bantuan lewat WA 0822-5269-3421.</p>
  </section>
 </main>
 <div class="strip" id="cartbar"><div><div class="sp" data-act="cart" style="cursor:pointer"><div class="cnt" id="cbJml"></div><div class="tot num" id="cbTot"></div></div><button class="btn" data-act="cart">Lihat</button><button class="btn pri" data-act="bayar">Bayar</button></div></div>
@@ -187,6 +197,7 @@ pre.struk{background:#fff;color:#111;border-radius:2px;padding:14px 12px;font:13
 <div id="scanner" class="hid"><video id="scanVid" playsinline muted></video><div class="aim"></div><div class="bar2"><span class="sp">Arahkan kamera ke barcode</span><button class="btn" data-act="stopScan">Tutup</button></div></div>
 <input type="file" id="fScan" accept="image/*" capture="environment" class="hid">
 <div id="toast"></div>
+<div id="cetakArea"></div>
 <script>
 {
 const $=s=>document.querySelector(s);
@@ -285,10 +296,10 @@ async function selesai(metode){const t=totalCart();let dibayar,pelId=null;
  for(const i of cart)if(i.pid){const p=byId(i.pid);if(p){p.stok=(p.stok||0)-i.qty*i.isi;p.terjual=(p.terjual||0)+i.qty*i.isi;await put('produk',p)}}
  S.transaksi.push(tr);await put('transaksi',tr);
  if(metode==='kasbon'&&t-dibayar>0){const k={id:uid(),pelId,waktu:tr.waktu,jenis:'hutang',jumlah:t-dibayar,trxId:tr.id,ket:'Belanja #'+no};S.kasbon.push(k);await put('kasbon',k)}
- cart=[];renderKasir();lihatTrx(tr.id,true)}
+ cart=[];renderKasir();lihatTrx(tr.id,true);if(S.set.printerAuto==='1'&&S.set.printerMetode)cetak(strukTeks(tr))}
 
 /* ---------- STRUK ---------- */
-function strukTeks(t){const W=32,L='-'.repeat(W);const pad=(a,b)=>{a=String(a);b=String(b);const s=W-a.length-b.length;return s>0?a+' '.repeat(s)+b:a+'\n'+' '.repeat(Math.max(0,W-b.length))+b};const c=s=>{s=String(s);return ' '.repeat(Math.max(0,Math.floor((W-s.length)/2)))+s};
+function strukTeks(t){const W=lebar(),L='-'.repeat(W);const pad=(a,b)=>{a=String(a);b=String(b);const s=W-a.length-b.length;return s>0?a+' '.repeat(s)+b:a+'\n'+' '.repeat(Math.max(0,W-b.length))+b};const c=s=>{s=String(s);return ' '.repeat(Math.max(0,Math.floor((W-s.length)/2)))+s};
  const o=[c(S.set.nama||'TOKO')];if(S.set.alamat)o.push(c(S.set.alamat));if(S.set.hp)o.push(c('WA '+S.set.hp));
  const d=new Date(t.waktu);o.push(L,pad(d.toLocaleDateString('id-ID')+' '+d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}),'#'+t.no));
  const pel=t.pelId&&pelById(t.pelId);if(pel)o.push('Pelanggan: '+pel.nama);o.push(L);
@@ -297,9 +308,41 @@ function strukTeks(t){const W=32,L='-'.repeat(W);const pad=(a,b)=>{a=String(a);b
  if(t.metode==='tunai')o.push(pad('Tunai',rp(t.dibayar)),pad('Kembali',rp(t.kembali)));
  else{o.push(pad('Dibayar',rp(t.dibayar)),pad('Masuk kasbon',rp(t.total-t.dibayar)));if(pel)o.push(pad('Total hutang kini',rp(saldo(pel.id))))}
  o.push(L,c(S.set.catatan||'Terima kasih'));return o.join('\n')}
+/* ---------- PRINTER ---------- */
+const BT_SVC=['000018f0-0000-1000-8000-00805f9b34fb','e7810a71-73ae-499d-8c15-faa9aef0c3f2','49535343-fe7d-4ae5-8fa9-9fafd205e455','0000ff00-0000-1000-8000-00805f9b34fb','0000ffe0-0000-1000-8000-00805f9b34fb','0000ae30-0000-1000-8000-00805f9b34fb','0000fee7-0000-1000-8000-00805f9b34fb','0000ff12-0000-1000-8000-00805f9b34fb'];
+let btDev=null,btChar=null;
+function lebar(){return S.set.kertas==='80'?48:32}
+const jeda=ms=>new Promise(r=>setTimeout(r,ms));
+async function cariChar(srv){const svs=await srv.getPrimaryServices();for(const sv of svs){let cs=[];try{cs=await sv.getCharacteristics()}catch(e){}for(const c of cs)if(c.properties.writeWithoutResponse||c.properties.write)return c}return null}
+async function sambungBT(pilihBaru){if(!navigator.bluetooth)throw new Error('nobt');
+ if(!pilihBaru&&!btDev&&S.set.printerId&&navigator.bluetooth.getDevices){try{btDev=(await navigator.bluetooth.getDevices()).find(d=>d.id===S.set.printerId)||null}catch(e){}}
+ if(pilihBaru||!btDev){btDev=await navigator.bluetooth.requestDevice({acceptAllDevices:true,optionalServices:BT_SVC});btDev.addEventListener('gattserverdisconnected',()=>{btChar=null;renderPrinter()})}
+ const srv=btDev.gatt.connected?btDev.gatt:await btDev.gatt.connect();btChar=await cariChar(srv);if(!btChar)throw new Error('nochar');
+ Object.assign(S.set,{printerNama:btDev.name||'Printer Bluetooth',printerId:btDev.id,printerMetode:'bt'});await put('setelan',S.set);renderPrinter();return btChar}
+function pesanBT(e){if(e.message==='nobt')return 'HP atau browser ini belum bisa Bluetooth langsung. Pilih cara RawBT.';if(e.message==='nochar')return 'Printer tersambung tapi tidak menerima data. Coba cara RawBT.';if(e.name==='SecurityError')return 'Ketuk tombol Cetak struk untuk mencetak.';return 'Printer tidak tersambung. Pastikan printer menyala dan dekat dengan HP.'}
+function escpos(teks){const t=teks.normalize('NFKD').replace(/[̀-ͯ]/g,'').replace(/[−–—]/g,'-').replace(/[^\n\x20-\x7E]/g,'?');const o=[0x1B,0x40];for(const ch of t)o.push(ch==='\n'?0x0A:ch.charCodeAt(0));o.push(0x0A,0x0A,0x0A,0x0A,0x1D,0x56,0x01);return new Uint8Array(o)}
+async function kirimBT(data){let c=btChar;if(!c||!btDev||!btDev.gatt.connected)c=await sambungBT(false);const tanpa=c.properties.writeWithoutResponse&&c.writeValueWithoutResponse;
+ for(let i=0;i<data.length;i+=20){const p=data.slice(i,i+20);if(tanpa)await c.writeValueWithoutResponse(p);else await c.writeValue(p);await jeda(tanpa?12:2)}}
+function bukaLink(u){if(AND){AND.buka(u);return}const a=document.createElement('a');a.href=u;document.body.appendChild(a);a.click();a.remove()}
+async function cetak(teks){const m=S.set.printerMetode||'';
+ if(m==='bt'){try{toast('Mencetak…');await kirimBT(escpos(teks));toast('Struk dicetak')}catch(e){if(e.name==='NotFoundError')return;toast(pesanBT(e))}return}
+ if(m==='rawbt'){let s='';escpos(teks).forEach(x=>s+=String.fromCharCode(x));bukaLink('rawbt:base64,'+btoa(s));return}
+ if(m==='sistem'){const d=$('#cetakArea');d.innerHTML='<pre>'+esc(teks)+'</pre>';try{window.print()}catch(e){toast('Dialog cetak tidak tersedia di sini')}return}
+ toast('Printer belum diatur. Buka Pengaturan, bagian Printer struk.')}
+function renderPrinter(){const m=S.set.printerMetode||'';$('#prMetode').value=m;$('#prKertas').value=S.set.kertas||'58';$('#prAuto').value=S.set.printerAuto||'';
+ $('#prBtBox').classList.toggle('hid',m!=='bt');$('#prRawInfo').classList.toggle('hid',m!=='rawbt');
+ const on=btDev&&btDev.gatt&&btDev.gatt.connected&&btChar;
+ $('#prStatus').textContent=m==='bt'?(on?'Tersambung ke '+S.set.printerNama:S.set.printerNama?S.set.printerNama+', siap disambung':'Belum memilih printer'):m==='rawbt'?'Lewat RawBT':m==='sistem'?'Dialog cetak':'Tidak dipakai';
+ $('#prStatus').className=m==='bt'&&on?'pos':'';
+ if(m==='bt'&&!navigator.bluetooth)$('#prBtInfo').textContent='HP atau browser ini belum mendukung Bluetooth langsung dari aplikasi. Pakai cara RawBT.'}
+async function simpanPrinter(){Object.assign(S.set,{printerMetode:$('#prMetode').value,kertas:$('#prKertas').value,printerAuto:$('#prAuto').value});await put('setelan',S.set);renderPrinter()}
+['#prMetode','#prKertas','#prAuto'].forEach(s=>$(s).addEventListener('change',simpanPrinter));
+async function cariPrinter(){try{await sambungBT(true);toast('Printer tersambung: '+S.set.printerNama)}catch(e){if(e.name!=='NotFoundError')toast(pesanBT(e))}}
+function teksTes(){const W=lebar(),L='-'.repeat(W);return ['TES PRINTER',S.set.nama||'Toko',L,'Kertas '+(S.set.kertas||'58')+' mm, '+W+' huruf per baris','1234567890'.repeat(Math.ceil(W/10)).slice(0,W),L,'Kalau tulisan ini rapi,','printer siap dipakai.'].join('\n')}
+
 function lihatTrx(id,baru){const t=S.transaksi.find(x=>x.id===id);if(!t)return;
  sheet(`<h2>${baru?(t.metode==='tunai'?'Transaksi tersimpan':'Kasbon tersimpan'):'Nota nomor '+t.no}</h2>${baru&&t.metode==='tunai'?`<div class="kembali"><span>Kembalian</span><b class="num">${rp(t.kembali)}</b></div>`:''}<pre class="struk">${esc(strukTeks(t))}</pre>
- <div class="row" style="margin-top:14px"><button class="btn hij sp" data-act="waStruk" data-id="${esc(t.id)}">Kirim lewat WA</button><button class="btn sp" data-act="salinStruk" data-id="${esc(t.id)}">Salin teks</button></div>
+ <div class="row" style="margin-top:14px">${S.set.printerMetode?`<button class="btn pri sp" data-act="cetakStruk" data-id="${esc(t.id)}">Cetak struk</button>`:''}<button class="btn hij sp" data-act="waStruk" data-id="${esc(t.id)}">Kirim lewat WA</button>${S.set.printerMetode?'':`<button class="btn sp" data-act="salinStruk" data-id="${esc(t.id)}">Salin teks</button>`}</div>
  ${baru?'<button class="btn pri full" data-act="tutup">Layani pembeli berikutnya</button>':`<button class="btn mer full" data-act="batalTrx" data-id="${esc(t.id)}">Batalkan transaksi</button>`}`)}
 async function batalTrx(id){const t=S.transaksi.find(x=>x.id===id);if(!t||!await ask('Transaksi #'+t.no+' dibatalkan. Stok dikembalikan dan kasbonnya dihapus.'))return;
  for(const i of t.items)if(i.pid){const p=byId(i.pid);if(p){p.stok=(p.stok||0)+i.qty*i.isi;p.terjual=Math.max(0,(p.terjual||0)-i.qty*i.isi);await put('produk',p)}}
@@ -368,7 +411,7 @@ function renderLaporan(){const P=[['hari','Hari ini'],['kemarin','Kemarin'],['7'
  <h3>Nota ${nmP}</h3>${T.length?`<div class="list">${T.slice(0,100).map(t=>{const pl=t.pelId&&pelById(t.pelId);return `<button class="item" data-act="trx" data-id="${esc(t.id)}"><div class="sp"><div class="n">Nota ${t.no}${t.metode==='kasbon'?' <span class="neg">kasbon '+esc(pl?pl.nama:'')+'</span>':''}</div><div class="s">${tgl(t.waktu)}, ${t.items.length} jenis barang</div></div><div class="h">${rp(t.total)}</div></button>`}).join('')}</div>`:'<p class="muted" style="margin:6px 2px">Belum ada nota.</p>'}`}
 
 /* ---------- ATUR ---------- */
-function renderSet(){$('#sNama').value=S.set.nama||'';$('#sAlamat').value=S.set.alamat||'';$('#sHp').value=S.set.hp||'';$('#sCat').value=S.set.catatan||'';
+function renderSet(){renderPrinter();$('#sNama').value=S.set.nama||'';$('#sAlamat').value=S.set.alamat||'';$('#sHp').value=S.set.hp||'';$('#sCat').value=S.set.catatan||'';
  $('#infoBackup').textContent='Simpan file cadangan ke Google Drive atau kirim ke WA sendiri, minimal seminggu sekali. '+(S.set.lastBackup?'Terakhir: '+tgl(S.set.lastBackup)+'.':'Belum pernah dicadangkan.')}
 async function simpanSet(){Object.assign(S.set,{nama:$('#sNama').value.trim()||'Toko Saya',alamat:$('#sAlamat').value.trim(),hp:$('#sHp').value.trim(),catatan:$('#sCat').value.trim()});await put('setelan',S.set);$('#hNama').textContent=S.set.nama;toast('Tersimpan')}
 const dataCadangan=()=>JSON.stringify({app:'kasir-kelontong',versi:1,waktu:Date.now(),produk:S.produk,pelanggan:S.pelanggan,transaksi:S.transaksi,kasbon:S.kasbon,setelan:S.set});
@@ -405,6 +448,7 @@ const ACT={nav:go,tapP,addE:id=>{addItem(byId(id),false);tutup()},addG:id=>{addI
  kbLunas:async id=>{const s=saldo(id);if(await ask('Catat pelunasan '+rp(s)+' untuk '+pelById(id).nama+'?'))catatKb(id,'bayar',s,'Pelunasan')},
  tagih:id=>{const p=pelById(id);bukaWA(p.hp,`Halo ${p.nama}, catatan kasbon di ${S.set.nama} saat ini ${rp(saldo(id))}. Mohon dibayar kalau sudah ada rezeki. Terima kasih 🙏`)},
  hapusLog:async id=>{const k=S.kasbon.find(x=>x.id===id);if(!k||!await ask('Hapus catatan '+rp(k.jumlah)+'?'))return;S.kasbon=S.kasbon.filter(x=>x.id!==id);await del('kasbon',id);detailPel(k.pelId);renderKasbon()},
+ cetakStruk:id=>cetak(strukTeks(S.transaksi.find(x=>x.id===id))),cariPrinter,tesCetak:()=>cetak(teksTes()),
  simpanSet,backup,salinBackup,restore:()=>$('#fRestore').click(),contoh,reset};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const fn=ACT[b.dataset.act];if(fn)fn(b.dataset.id,b,e)});
 
