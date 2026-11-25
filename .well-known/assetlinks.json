@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.nugroho93.kasir",
+        "sha256_cert_fingerprints": ["EF:E1:9D:E3:31:5D:F7:14:8F:DA:BE:4A:B0:7C:EE:49:1E:1C:6B:C4:E7:2B:ED:E7:FF:E2:26:87:3C:EA:FE:95"]
+      }
+    }]
